@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marco Teórico - Veterinaria San Roque 🐾</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">🐾 <a href="index.html">Veterinaria San Roque</a></div>
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="marco-teorico.html" class="nav-link activo">Marco Teórico</a>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-estructurado')">
+          Análisis Estructurado ▾
+          <span class="tooltip">Modelado clásico por procesos: DFD, DER y Diccionario. 📊</span>
+        </button>
+        <div id="menu-estructurado" class="dropdown-menu">
+          <a href="estructurado.html#dfd">Diagrama de Flujo de Datos</a>
+          <a href="estructurado.html#der">Modelo Entidad-Relación</a>
+          <a href="estructurado.html#diccionario">Diccionario de Datos</a>
+        </div>
+      </div>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-oo')">
+          Orientado a Objetos ▾
+          <span class="tooltip">Paradigma UML: Casos de uso, clases y secuencias. 🧩</span>
+        </button>
+        <div id="menu-oo" class="dropdown-menu">
+          <a href="objetos.html#casos-uso">Casos de Uso</a>
+          <a href="objetos.html#clases">Diagrama de Clases</a>
+          <a href="objetos.html#secuencia">Diagrama de Secuencia</a>
+        </div>
+      </div>
+      <div class="nav-item-tooltip">
+        <a href="video.html" class="nav-link">
+          Video 🎥
+          <span class="tooltip">Demostración audiovisual del sistema. 🍿</span>
+        </a>
+      </div>
+      <a href="contactos.html" class="nav-link">Contactos</a>
+    </nav>
+    <div class="auth-box">
+      <a href="index.html" class="btn-primary" style="text-decoration:none;">Acceso al Sistema</a>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="card">
+      <h2>Marco Teórico y Conceptual 📚</h2>
+      <p style="margin-top:0.8rem;">
+        El presente proyecto aborda el desarrollo de un sistema informático orientado a la gestión de servicios veterinarios, control de agenda clínica y administración de expedientes para mascotas.
+      </p>
+
+      <h3 style="margin-top:1.5rem; color:#0369a1;">1. Objetivos del Sistema</h3>
+      <ul style="margin-left:1.5rem; margin-top:0.5rem; line-height:1.8;">
+        <li>Automatizar la asignación de turnos médicos evitando duplicidad de horarios.</li>
+        <li>Separar claramente los roles de interacción entre clientes (solicitantes) y personal clínico (administradores).</li>
+        <li>Garantizar disponibilidad de información sobre tratamientos y esquemas de vacunación.</li>
+      </ul>
+
+      <h3 style="margin-top:1.5rem; color:#0369a1;">2. Arquitectura de Software</h3>
+      <p style="margin-top:0.5rem;">
+        La aplicación implementa una arquitectura basada en capas: una interfaz web desacoplada (Frontend) comunicada mediante estándares HTTP/REST hacia la lógica de persistencia y reglas de negocio (Backend).
+      </p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

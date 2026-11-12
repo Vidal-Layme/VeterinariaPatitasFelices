@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orientado a Objetos - Veterinaria San Roque 🐾</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">🐾 <a href="index.html">Veterinaria San Roque</a></div>
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="marco-teorico.html" class="nav-link">Marco Teórico</a>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-estructurado')">
+          Análisis Estructurado ▾
+          <span class="tooltip">Modelado clásico por procesos: DFD, DER y Diccionario. 📊</span>
+        </button>
+        <div id="menu-estructurado" class="dropdown-menu">
+          <a href="estructurado.html#dfd">Diagrama de Flujo de Datos</a>
+          <a href="estructurado.html#der">Modelo Entidad-Relación</a>
+          <a href="estructurado.html#diccionario">Diccionario de Datos</a>
+        </div>
+      </div>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle activo" onclick="toggleDropdown('menu-oo')">
+          Orientado a Objetos ▾
+          <span class="tooltip">Paradigma UML: Casos de uso, clases y secuencias. 🧩</span>
+        </button>
+        <div id="menu-oo" class="dropdown-menu">
+          <a href="#casos-uso">Casos de Uso</a>
+          <a href="#clases">Diagrama de Clases</a>
+          <a href="#secuencia">Diagrama de Secuencia</a>
+        </div>
+      </div>
+      <div class="nav-item-tooltip">
+        <a href="video.html" class="nav-link">
+          Video 🎥
+          <span class="tooltip">Demostración audiovisual del sistema. 🍿</span>
+        </a>
+      </div>
+      <a href="contactos.html" class="nav-link">Contactos</a>
+    </nav>
+    <div class="auth-box">
+      <a href="index.html" class="btn-primary" style="text-decoration:none;">Acceso al Sistema</a>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="card" id="casos-uso">
+      <h2>Diagrama de Casos de Uso (UML) 👥</h2>
+      <p style="margin-top:0.5rem;">Definición de interacción entre los actores del software:</p>
+      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
+        <p><strong>[Diagrama de Casos de Uso]</strong></p>
+        <small>Actores: Cliente (Registrar Cita, Cancelar Cita) | Administrador (Aprobar Turnos, Gestionar Horarios)</small>
+      </div>
+    </section>
+
+    <section class="card" id="clases" style="margin-top:2rem;">
+      <h2>Diagrama de Clases 🧩</h2>
+      <p style="margin-top:0.5rem;">Modelado estructural orientado a objetos y relaciones de herencia:</p>
+      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
+        <p><strong>[Diagrama de Clases del Sistema]</strong></p>
+        <small>Clases: Usuario ➔ Cliente / Administrador | Mascota | CitaMedica | Agenda</small>
+      </div>
+    </section>
+
+    <section class="card" id="secuencia" style="margin-top:2rem;">
+      <h2>Diagrama de Secuencia ⏳</h2>
+      <p style="margin-top:0.5rem;">Intercambio cronológico de mensajes al agendar una consulta:</p>
+      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
+        <p><strong>[Diagrama de Secuencia: Agendar Cita]</strong></p>
+        <small>Cliente ➔ UI ➔ AuthController ➔ CitaController ➔ BaseDeDatos</small>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demostración en Video - Veterinaria San Roque 🐾</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">🐾 <a href="index.html">Veterinaria San Roque</a></div>
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="marco-teorico.html" class="nav-link">Marco Teórico</a>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-estructurado')">
+          Análisis Estructurado ▾
+          <span class="tooltip">Modelado clásico por procesos: DFD, DER y Diccionario. 📊</span>
+        </button>
+        <div id="menu-estructurado" class="dropdown-menu">
+          <a href="estructurado.html#dfd">Diagrama de Flujo de Datos</a>
+          <a href="estructurado.html#der">Modelo Entidad-Relación</a>
+          <a href="estructurado.html#diccionario">Diccionario de Datos</a>
+        </div>
+      </div>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-oo')">
+          Orientado a Objetos ▾
+          <span class="tooltip">Paradigma UML: Casos de uso, clases y secuencias. 🧩</span>
+        </button>
+        <div id="menu-oo" class="dropdown-menu">
+          <a href="objetos.html#casos-uso">Casos de Uso</a>
+          <a href="objetos.html#clases">Diagrama de Clases</a>
+          <a href="objetos.html#secuencia">Diagrama de Secuencia</a>
+        </div>
+      </div>
+      <div class="nav-item-tooltip">
+        <a href="video.html" class="nav-link activo">
+          Video 🎥
+          <span class="tooltip">Demostración audiovisual del sistema. 🍿</span>
+        </a>
+      </div>
+      <a href="contactos.html" class="nav-link">Contactos</a>
+    </nav>
+    <div class="auth-box">
+      <a href="index.html" class="btn-primary" style="text-decoration:none;">Acceso al Sistema</a>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="card" style="text-align:center;">
+      <h2>Demostración Audiovisual del Sistema 🎥</h2>
+      <p style="margin-top:0.5rem; color:#475569;">
+        Defensa del software, arquitectura técnica y recorrido en vivo de la reserva de citas y gestión médica.
+      </p>
+
+      <div style="background:#0f172a; color:#fff; height:360px; border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; margin-top:2rem;">
+        <span style="font-size:3rem; margin-bottom:1rem;">▶️</span>
+        <p>Espacio reservado para el reproductor de video</p>
+        <small style="color:#94a3b8; margin-top:0.5rem;">(Puedes incrustar un iframe de YouTube o un video en formato MP4)</small>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

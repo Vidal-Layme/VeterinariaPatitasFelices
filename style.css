@@ -1,0 +1,462 @@
+/* Variables y reseteo */
+:root {
+  --bg-deep: #051911;         /* Verde oscuro casi negro */
+  --bg-surface: #0a271c;      /* Verde bosque profundo */
+  --bg-card: #0e3526;         /* Tarjeta verde sobria */
+  --accent: #10b981;          /* Esmeralda vibrante */
+  --accent-light: #34d399;    /* Verde menta suave */
+  --text-main: #f0fdf4;       /* Blanco con tinte verde sutil */
+  --text-muted: #a7f3d0;      /* Texto secundario claro */
+  --border: #164e39;          /* Bordes discretos */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* 1. Barra superior limpia */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  background: rgba(5, 25, 17, 0.85);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+}
+
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent-light);
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-outline:hover {
+  background: var(--accent);
+  color: var(--bg-deep);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+/* 2. Hero con Pregunta Reflexiva Central */
+.hero-impacto {
+  padding: 6rem 2rem 5rem;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background: radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+}
+
+.hero-content {
+  max-width: 850px;
+}
+
+.badge-saludo {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--accent-light);
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.8rem;
+}
+
+.pregunta-central {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.hero-bajada {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 680px;
+  margin: 0 auto 2.5rem;
+  font-weight: 400;
+}
+
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-glow {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(16, 185, 129, 0.55);
+}
+
+.link-conoce-mas {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.link-conoce-mas:hover {
+  color: var(--accent-light);
+}
+
+/* 3. Sección de Servicios */
+.seccion-servicios {
+  padding: 5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.servicios-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.subtitulo-verde {
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.servicios-header h2 {
+  font-size: 2.2rem;
+  margin-top: 0.5rem;
+  color: #ffffff;
+}
+
+.servicios-header p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-top: 0.4rem;
+}
+
+.grid-servicios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.servicio-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.servicio-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+.servicio-icono {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.servicio-card h3 {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 0.6rem;
+}
+
+.servicio-card p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* 4. Banner Final */
+.banner-registro {
+  padding: 4rem 2rem 6rem;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.banner-inner {
+  background: linear-gradient(145deg, var(--bg-surface), var(--bg-card));
+  border: 1px solid var(--border);
+  padding: 3.5rem 2rem;
+  border-radius: 24px;
+}
+
+.banner-inner h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 0.8rem;
+}
+
+.banner-inner p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Footer */
+.footer-simple {
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.modal-tabs {
+  display: flex;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 0.7rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab-btn.activo {
+  color: var(--accent-light);
+  border-bottom: 2px solid var(--accent);
+}
+
+form label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 1rem 0 0.3rem;
+  font-weight: 500;
+}
+
+form input {
+  width: 100%;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+form input:focus {
+  border-color: var(--accent);
+}
+
+.w-100 {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+html {
+  scroll-behavior: smooth; /* 👈 Hace que todos los saltos dentro de la página sean suaves y deslizados */
+}
+.hero-impacto {
+  position: relative;
+  overflow: visible !important;
+  padding: 2.5rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 1. Contenedor rígido de la ventana */
+.ventana-contenedor {
+  position: relative;
+  width: 280px;
+  height: 350px;
+  margin: 1rem auto 2rem;
+  overflow: visible !important;
+  z-index: 5;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* 2. El marco verde (fondo de la ventana) */
+.ventana-marco {
+  position: absolute;
+  inset: 0;
+  border-radius: 40px 140px 40px 140px;
+  border: 4px solid var(--accent);
+  background: radial-gradient(circle at 60% 40%, #0d3829 0%, #051a12 100%);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6),
+              inset 0 0 25px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* 3. Contenedor de recorte inferior:
+   Coincide exactamente con el marco verde abajo y a la izquierda,
+   pero sube -80px y da +40px a la derecha para la trufa/hocico */
+.recorte-cuello {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: -35px;                  /* Margen para que el hocico no tope la pared */
+  top: -70px;                   /* Margen superior para orejas y cabeza */
+  border-radius: 0 0 40px 140px; /* Corta el cuello siguiendo la curva base */
+  overflow: hidden;             /* Recorta la base del pecho */
+  z-index: 2;
+}
+
+/* 4. La imagen del perro */
+.perro-ventana {
+  position: absolute;
+  bottom: 0;                    /* Pegado al piso del marco */
+  left: 0;
+  width: calc(100% - 10px);
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom left; /* Cuello apoyado en la base izquierda */
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.7));
+}
+
+/* Contenido de texto */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.pregunta-central {
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #ffffff;
+  margin-bottom: 1.2rem;
+}
+
+/* ==========================================
+   PANTALLA DE PC (Más de 992px)
+   ========================================== */
+@media (min-width: 992px) {
+  .hero-impacto {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding: 6rem 4rem;
+    gap: 4.5rem;
+  }
+
+  .ventana-contenedor {
+    width: 360px;
+    height: 440px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .recorte-cuello {
+    right: -65px;                /* Suficiente holgura para el hocico en PC */
+    top: -95px;
+    border-radius: 0 0 40px 140px;
+  }
+
+  .perro-ventana {
+    width: calc(100% - 15px);
+  }
+
+  .hero-content {
+    margin: 0;
+    max-width: 650px;
+  }
+
+  .pregunta-central {
+    font-size: 2.8rem;
+  }
+}

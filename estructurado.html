@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Análisis Estructurado - Veterinaria San Roque 🐾</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">🐾 <a href="index.html">Veterinaria San Roque</a></div>
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="marco-teorico.html" class="nav-link">Marco Teórico</a>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle activo" onclick="toggleDropdown('menu-estructurado')">
+          Análisis Estructurado ▾
+          <span class="tooltip">Modelado clásico por procesos: DFD, DER y Diccionario. 📊</span>
+        </button>
+        <div id="menu-estructurado" class="dropdown-menu">
+          <a href="#dfd">Diagrama de Flujo de Datos</a>
+          <a href="#der">Modelo Entidad-Relación</a>
+          <a href="#diccionario">Diccionario de Datos</a>
+        </div>
+      </div>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-oo')">
+          Orientado a Objetos ▾
+          <span class="tooltip">Paradigma UML: Casos de uso, clases y secuencias. 🧩</span>
+        </button>
+        <div id="menu-oo" class="dropdown-menu">
+          <a href="objetos.html#casos-uso">Casos de Uso</a>
+          <a href="objetos.html#clases">Diagrama de Clases</a>
+          <a href="objetos.html#secuencia">Diagrama de Secuencia</a>
+        </div>
+      </div>
+      <div class="nav-item-tooltip">
+        <a href="video.html" class="nav-link">
+          Video 🎥
+          <span class="tooltip">Demostración audiovisual del sistema. 🍿</span>
+        </a>
+      </div>
+      <a href="contactos.html" class="nav-link">Contactos</a>
+    </nav>
+    <div class="auth-box">
+      <a href="index.html" class="btn-primary" style="text-decoration:none;">Acceso al Sistema</a>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="card" id="dfd">
+      <h2>Diagrama de Flujo de Datos (DFD) 📊</h2>
+      <p style="margin-top:0.5rem;">Representación de los niveles de flujo de información para el módulo de agendamiento de turnos:</p>
+      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
+        <p><strong>[Diagrama DFD Nivel 0 y Nivel 1]</strong></p>
+        <small>Procesos: 1.0 Autenticar Usuario | 2.0 Consultar Disponibilidad | 3.0 Registrar Cita</small>
+      </div>
+    </section>
+
+    <section class="card" id="der" style="margin-top:2rem;">
+      <h2>Modelo Entidad-Relación (DER) 🗄️</h2>
+      <p style="margin-top:0.5rem;">Estructura relacional de almacenamiento en base de datos:</p>
+      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
+        <p><strong>[Esquema de Tablas Relacionales]</strong></p>
+        <small>Entidades principales: USUARIOS (1:N) MASCOTAS (1:N) CITAS (N:1) VETERINARIO</small>
+      </div>
+    </section>
+
+    <section class="card" id="diccionario" style="margin-top:2rem;">
+      <h2>Diccionario de Datos 📖</h2>
+      <p style="margin-top:0.5rem;">Definición de campos y tipos de datos del sistema:</p>
+      <table style="width:100%; border-collapse:collapse; margin-top:1rem; font-size:0.9rem;">
+        <thead>
+          <tr style="background:#e0f2fe; text-align:left;">
+            <th style="padding:0.6rem; border:1px solid #cbd5e1;">Campo</th>
+            <th style="padding:0.6rem; border:1px solid #cbd5e1;">Tipo de Dato</th>
+            <th style="padding:0.6rem; border:1px solid #cbd5e1;">Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:0.5rem; border:1px solid #cbd5e1;">id_usuario</td>
+            <td style="padding:0.5rem; border:1px solid #cbd5e1;">INT / VARCHAR</td>
+            <td style="padding:0.5rem; border:1px solid #cbd5e1;">Identificador único del usuario (PK)</td>
+          </tr>
+          <tr>
+            <td style="padding:0.5rem; border:1px solid #cbd5e1;">rol</td>
+            <td style="padding:0.5rem; border:1px solid #cbd5e1;">VARCHAR(10)</td>
+            <td style="padding:0.5rem; border:1px solid #cbd5e1;">Rol del sistema ('admin' o 'cliente')</td>
+          </tr>
+          <tr>
+            <td style="padding:0.5rem; border:1px solid #cbd5e1;">fecha_cita</td>
+            <td style="padding:0.5rem; border:1px solid #cbd5e1;">DATE</td>
+            <td style="padding:0.5rem; border:1px solid #cbd5e1;">Fecha asignada para la atención médica</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

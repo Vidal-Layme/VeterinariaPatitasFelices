@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contactos - Veterinaria San Roque 🐾</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">🐾 <a href="index.html">Veterinaria San Roque</a></div>
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="marco-teorico.html" class="nav-link">Marco Teórico</a>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-estructurado')">
+          Análisis Estructurado ▾
+          <span class="tooltip">Modelado clásico por procesos: DFD, DER y Diccionario. 📊</span>
+        </button>
+        <div id="menu-estructurado" class="dropdown-menu">
+          <a href="estructurado.html#dfd">Diagrama de Flujo de Datos</a>
+          <a href="estructurado.html#der">Modelo Entidad-Relación</a>
+          <a href="estructurado.html#diccionario">Diccionario de Datos</a>
+        </div>
+      </div>
+      <div class="dropdown-item">
+        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-oo')">
+          Orientado a Objetos ▾
+          <span class="tooltip">Paradigma UML: Casos de uso, clases y secuencias. 🧩</span>
+        </button>
+        <div id="menu-oo" class="dropdown-menu">
+          <a href="objetos.html#casos-uso">Casos de Uso</a>
+          <a href="objetos.html#clases">Diagrama de Clases</a>
+          <a href="objetos.html#secuencia">Diagrama de Secuencia</a>
+        </div>
+      </div>
+      <div class="nav-item-tooltip">
+        <a href="video.html" class="nav-link">
+          Video 🎥
+          <span class="tooltip">Demostración audiovisual del sistema. 🍿</span>
+        </a>
+      </div>
+      <a href="contactos.html" class="nav-link activo">Contactos</a>
+    </nav>
+    <div class="auth-box">
+      <a href="index.html" class="btn-primary" style="text-decoration:none;">Acceso al Sistema</a>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="card">
+      <h2>Canales de Contacto y Ubicación 📞</h2>
+      <p style="margin-top:0.5rem; color:#475569;">Estamos listos para atender a tus mascotas con atención personalizada.</p>
+
+      <div style="margin-top:1.5rem; line-height:2;">
+        <p>📍 <strong>Ubicación:</strong> Av. Julio César Valdez, Zona Alto de la Alianza</p>
+        <p>📱 <strong>WhatsApp / Teléfono:</strong> +591 70000000</p>
+        <p>⏰ <strong>Horarios de Atención:</strong> Lunes a Sábado de 08:30 a 19:00</p>
+        <p>🚨 <strong>Emergencias 24/7:</strong> Atención de guardia disponible previa llamada telefónica.</p>
+      </div>
+
+      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:2rem; border:1px solid #cbd5e1;">
+        <p>🗺️ <strong>[Mapa interactivo de Google Maps]</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
