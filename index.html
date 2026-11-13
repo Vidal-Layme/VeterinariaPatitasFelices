@@ -12,7 +12,7 @@
   <header class="topbar">
     <div class="logo">
       <span class="logo-icon">🐾</span>
-      <span class="logo-text">Patitas Felices</span>
+      <span class="logo-text">Veterinaria Patitas Felices</span>
     </div>
     <div class="topbar-action">
       <button class="btn-outline" onclick="abrirModal()">Iniciar Sesión / Crear Cuenta</button>
@@ -87,6 +87,24 @@
         <button class="btn-glow" onclick="abrirModal()">Crear mi cuenta de cliente 🐶🐱</button>
       </div>
     </section>
+
+    <!-- Sección de Mensaje / Consulta directa al Dueño -->
+    <section id="contacto" class="seccion-contacto">
+      <div class="contacto-card">
+        <span class="subtitulo-verde">ATENCIÓN DIRECTA</span>
+        <h2>¿Tienes alguna duda o consulta rápida? 💬</h2>
+        <p>Déjanos tu mensaje y el veterinario te responderá a la brevedad.</p>
+
+        <form id="form-mensaje-dueno" class="form-contacto">
+          <div class="contacto-fila">
+            <input type="text" id="msg-nombre" placeholder="Tu nombre" required>
+            <input type="email" id="msg-correo" placeholder="Tu correo para responderte" required>
+          </div>
+          <textarea id="msg-texto" rows="4" placeholder="Escribe aquí tu consulta sobre tu mascota..." required></textarea>
+          <button type="submit" class="btn-glow w-100">Enviar mensaje al Dueño 📩</button>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer class="footer-simple">
@@ -97,32 +115,48 @@
   <div id="modal-auth" class="modal-overlay" style="display: none;">
     <div class="modal-card">
       <button class="modal-close" onclick="cerrarModal()">&times;</button>
-      <div class="modal-tabs">
+      
+      <div class="modal-tabs" id="modal-tabs">
         <button class="tab-btn activo" id="tab-login" onclick="cambiarTab('login')">Iniciar Sesión</button>
         <button class="tab-btn" id="tab-registro" onclick="cambiarTab('registro')">Crear Cuenta</button>
       </div>
 
-      <form id="form-login" onsubmit="event.preventDefault(); alert('Iniciando sesión...');">
+      <!-- PASO 1A: INICIAR SESIÓN -->
+      <form id="form-login">
         <label>Correo Electrónico</label>
-        <input type="email" placeholder="ejemplo@correo.com" required>
+        <input type="email" id="login-email" placeholder="ejemplo@correo.com" required>
         <label>Contraseña</label>
-        <input type="password" placeholder="••••••••" required>
+        <input type="password" id="login-pass" placeholder="••••••••" required>
         <button type="submit" class="btn-glow w-100">Ingresar al Sistema</button>
       </form>
 
-      <form id="form-registro" style="display: none;" onsubmit="event.preventDefault(); alert('Cuenta creada...');">
+      <!-- PASO 1B: CREAR CUENTA (SOLO CLIENTES) -->
+      <form id="form-registro" style="display: none;">
         <label>Tu Nombre Completo</label>
-        <input type="text" placeholder="Tu nombre" required>
+        <input type="text" id="reg-nombre" placeholder="Tu nombre" required>
         <label>Correo Electrónico</label>
-        <input type="email" placeholder="ejemplo@correo.com" required>
+        <input type="email" id="reg-email" placeholder="ejemplo@correo.com" required>
         <label>Contraseña</label>
-        <input type="password" placeholder="••••••••" required>
-        <button type="submit" class="btn-glow w-100">Registrarme</button>
+        <input type="password" id="reg-pass" placeholder="••••••••" required>
+        <button type="submit" id="btn-registrar" class="btn-glow w-100">Registrarme</button>
+      </form>
+
+      <!-- PASO 2: VERIFICAR CÓDIGO DE 4 DÍGITOS -->
+      <form id="form-verificar" style="display: none; text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📩</div>
+        <h3 style="color: #ffffff; margin-bottom: 0.5rem;">Revisa tu correo</h3>
+        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1.2rem;">
+          Enviamos un código de 4 dígitos a <strong id="correo-destino" style="color: var(--accent);"></strong>
+        </p>
+        <input type="text" id="input-codigo" maxlength="4" placeholder="0000" required 
+               style="text-align: center; font-size: 1.6rem; letter-spacing: 8px; font-weight: bold;">
+        <button type="submit" class="btn-glow w-100" style="margin-top: 1rem;">Verificar y Activar Cuenta ✅</button>
       </form>
     </div>
   </div>
 
-  <!-- 👇 EL NOMBRE EXACTO DE TU ARCHIVO JS AQUÍ: -->
+  <!-- Librería oficial de EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrador - Veterinaria Patitas Felices 🛠️</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- Barra superior del Administrador -->
+  <header class="topbar">
+    <div class="logo" style="cursor: pointer;" onclick="window.location.href='index.html'">
+      <span class="logo-icon">🐾</span>
+      <span class="logo-text">Patitas Felices — Administración</span>
+    </div>
+    <div class="topbar-action">
+      <span class="admin-badge-nombre">👨‍⚕️ Vidal (Dueño)</span>
+      <button class="btn-outline" onclick="window.location.href='index.html'" style="margin-right: 8px;">Ver Web</button>
+      <button class="btn-outline" onclick="cerrarSesionAdmin()">Salir</button>
+    </div>
+  </header>
+
+  <main class="admin-container">
+
+    <!-- BLOQUE SUPERIOR: GESTIÓN DE HORARIOS DISPONIBLES -->
+    <section class="admin-card">
+      <h2>
+        <span>⏰ Horarios Disponibles de Atención</span>
+        <span class="nota-subtitulo">Visible para los clientes al agendar</span>
+      </h2>
+      <div id="admin-horarios" class="horarios-admin-lista"></div>
+
+      <form id="form-agregar-hora" class="form-hora">
+        <input type="text" id="nueva-hora" placeholder="Ej. 05:30 PM o 11:00 AM" required>
+        <button type="submit" class="btn-glow" style="padding: 0.7rem 1.4rem;">+ Agregar Horario</button>
+      </form>
+    </section>
+
+    <!-- BLOQUE INFERIOR: CITAS AGENDADAS Y MENSAJES DE CLIENTES -->
+    <div class="admin-grid">
+
+      <!-- COLUMNA IZQUIERDA: CITAS -->
+      <section class="admin-card">
+        <h2>
+          <span>📅 Citas Agendadas</span>
+          <span id="count-citas" class="contador-badge">0</span>
+        </h2>
+        <div id="admin-lista-citas" class="lista-admin"></div>
+      </section>
+
+      <!-- COLUMNA DERECHA: MENSAJES RECIBIDOS -->
+      <section class="admin-card">
+        <h2>
+          <span>📩 Mensajes de Clientes</span>
+          <span id="count-mensajes" class="contador-badge">0</span>
+        </h2>
+        <div id="admin-lista-mensajes" class="lista-admin"></div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

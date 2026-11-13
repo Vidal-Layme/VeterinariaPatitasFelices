@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Portal - Veterinaria Patitas Felices 🐾</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cliente.css">
+</head>
+<body>
+
+  <!-- Barra superior del cliente -->
+  <header class="topbar">
+    <div class="logo" style="cursor: pointer;" onclick="window.location.href='index.html'">
+      <span class="logo-icon">🐾</span>
+      <span class="logo-text">Veterinaria Patitas Felices</span>
+    </div>
+    <div class="topbar-action">
+      <span id="saludo-cliente" class="saludo-usuario"></span>
+      <button class="btn-outline" onclick="window.location.href='index.html'" style="margin-right: 8px;">Inicio</button>
+      <button class="btn-outline" onclick="cerrarSesionCliente()">Salir</button>
+    </div>
+  </header>
+
+  <main class="portal-container">
+    
+    <!-- COLUMNA 1: HORARIOS DISPONIBLES Y AGENDAR CITA -->
+    <section class="panel-box">
+      <h2>📅 Agendar Cita Médica</h2>
+      <p class="desc">Revisa los horarios habilitados por la clínica y reserva el turno de tu mascota.</p>
+
+      <div class="bloque-horarios">
+        <span class="subtitulo-horarios">Horarios disponibles:</span>
+        <div id="contenedor-horarios" class="horarios-badges"></div>
+      </div>
+
+      <form id="form-cita" class="form-portal">
+        <label>Nombre de tu Mascota</label>
+        <input type="text" id="cita-mascota" placeholder="Ej. Max, Luna, Toby..." required>
+
+        <label>Tipo de Servicio</label>
+        <select id="cita-servicio" required>
+          <option value="Consulta Preventiva 🩺">Consulta Preventiva 🩺</option>
+          <option value="Vacunación / Desparasitación 💉">Vacunación / Desparasitación 💉</option>
+          <option value="Estética y Baño Medicado ✨">Estética y Baño Medicado ✨</option>
+          <option value="Urgencia Médica 🚨">Urgencia Médica 🚨</option>
+        </select>
+
+        <div class="grid-dos-columnas">
+          <div>
+            <label>Fecha</label>
+            <input type="date" id="cita-fecha" required>
+          </div>
+          <div>
+            <label>Horario</label>
+            <select id="cita-hora" required></select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-glow w-100" style="margin-top: 0.5rem;">Confirmar Reserva 🐾</button>
+      </form>
+
+      <h3 class="titulo-lista">Mis Citas Reservadas</h3>
+      <div id="lista-mis-citas" class="lista-items"></div>
+    </section>
+
+    <!-- COLUMNA 2: MENSAJES DIRECTOS AL DUEÑO -->
+    <section class="panel-box">
+      <h2>💬 Mensaje Directo al Veterinario</h2>
+      <p class="desc">¿Tienes alguna duda sobre síntomas, vacunas o cuidados? Escríbele directamente al dueño.</p>
+
+      <form id="form-mensaje-cliente" class="form-portal">
+        <label>Asunto o Motivo</label>
+        <input type="text" id="msg-asunto" placeholder="Ej. Duda sobre vacuna de cachorro" required>
+
+        <label>Tu Mensaje</label>
+        <textarea id="msg-contenido" rows="5" placeholder="Cuéntanos qué necesita tu mascota..." required></textarea>
+
+        <button type="submit" class="btn-glow w-100">Enviar Mensaje al Dueño 📩</button>
+      </form>
+
+      <h3 class="titulo-lista">Mis Mensajes Enviados</h3>
+      <div id="lista-mis-mensajes" class="lista-items"></div>
+    </section>
+
+  </main>
+
+  <script src="cliente.js"></script>
+</body>
+</html>
