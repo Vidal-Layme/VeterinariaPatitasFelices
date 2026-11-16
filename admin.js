@@ -1,147 +1,142 @@
-// 1. PROTEGER PANEL: Solo el Dueño (rol === "admin") puede entrar aquí
+import { db } from "./firebase-config.js";
+import { collection, onSnapshot, doc, updateDoc, deleteDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// 1. PROTEGER RUTA SOLO PARA EL DUEÑO
 const sesion = JSON.parse(localStorage.getItem("sesionActiva"));
 if (!sesion || sesion.rol !== "admin") {
   window.location.href = "index.html";
 }
 
-function cerrarSesionAdmin() {
+window.cerrarSesionAdmin = function() {
   localStorage.removeItem("sesionActiva");
   window.location.href = "index.html";
+};
+
+// 2. GESTIÓN DE HORARIOS EN FIREBASE
+const horariosPorDefecto = ["09:00 AM", "10:30 AM", "12:00 PM", "03:00 PM", "04:30 PM", "06:00 PM"];
+let horarios = [...horariosPorDefecto];
+
+async function cargarHorariosAdmin() {
+  const snap = await getDoc(doc(db, "config", "horarios"));
+  if (snap.exists() && snap.data().lista) {
+    horarios = snap.data().lista;
+  } else {
+    await setDoc(doc(db, "config", "horarios"), { lista: horarios });
+  }
+  renderizarHorariosAdmin();
 }
 
-// 2. GESTIÓN DE HORARIOS DISPONIBLES
-const horariosBase = ["09:00 AM", "10:30 AM", "12:00 PM", "03:00 PM", "04:30 PM", "06:00 PM"];
+function renderizarHorariosAdmin() {
+  const contenedor = document.getElementById("lista-horarios-admin");
+  if (!contenedor) return;
 
-function obtenerHorarios() {
-  return JSON.parse(localStorage.getItem("horariosPatitas")) || horariosBase;
-}
-
-function renderizarHorarios() {
-  const horarios = obtenerHorarios();
-  const contenedor = document.getElementById("admin-horarios");
-  contenedor.innerHTML = horarios.map((h, index) => `
-    <div class="hora-chip">
-      <span>${h}</span>
+  contenedor.innerHTML = horarios.map((hora, index) => `
+    <div class="chip-horario">
+      <span>🕒 ${hora}</span>
       <button title="Eliminar horario" onclick="eliminarHorario(${index})">&times;</button>
     </div>
   `).join("");
 }
 
-document.getElementById("form-agregar-hora").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const input = document.getElementById("nueva-hora");
-  const valor = input.value.trim().toUpperCase();
-  if (!valor) return;
-
-  const horarios = obtenerHorarios();
-  if (!horarios.includes(valor)) {
-    horarios.push(valor);
-    localStorage.setItem("horariosPatitas", JSON.stringify(horarios));
-    renderizarHorarios();
-  }
-  input.value = "";
-});
-
-function eliminarHorario(index) {
-  const horarios = obtenerHorarios();
-  horarios.splice(index, 1);
-  localStorage.setItem("horariosPatitas", JSON.stringify(horarios));
-  renderizarHorarios();
+const formHorario = document.getElementById("form-horario");
+if (formHorario) {
+  formHorario.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const nuevaHora = document.getElementById("nuevo-horario").value.trim().toUpperCase();
+    if (nuevaHora && !horarios.includes(nuevaHora)) {
+      horarios.push(nuevaHora);
+      await setDoc(doc(db, "config", "horarios"), { lista: horarios });
+      renderizarHorariosAdmin();
+    }
+    formHorario.reset();
+  });
 }
 
-// 3. GESTIÓN DE CITAS AGENDADAS
-function renderizarCitas() {
-  const citas = JSON.parse(localStorage.getItem("citasPatitas")) || [];
-  document.getElementById("count-citas").textContent = citas.length;
-  const contenedor = document.getElementById("admin-lista-citas");
+window.eliminarHorario = async function(index) {
+  horarios.splice(index, 1);
+  await setDoc(doc(db, "config", "horarios"), { lista: horarios });
+  renderizarHorariosAdmin();
+};
 
+// 3. CITAS EN TIEMPO REAL (ACEPTAR BLOQUEA EL HORARIO AL RESTO)
+onSnapshot(collection(db, "citas"), (snapshot) => {
+  const contenedor = document.getElementById("lista-citas-admin");
+  const citas = snapshot.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+  const badgeCitas = document.getElementById("contador-citas");
+  if (badgeCitas) badgeCitas.textContent = citas.length;
+
+  if (!contenedor) return;
   if (citas.length === 0) {
-    contenedor.innerHTML = `<p style="color: #6b7280;">No hay citas registradas todavía.</p>`;
+    contenedor.innerHTML = `<p style="color: #6b7280; font-size: 0.9rem;">No hay citas solicitadas todavía.</p>`;
     return;
   }
 
   contenedor.innerHTML = citas.map(c => `
-    <div class="registro-item">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <strong style="color: #ffffff; font-size: 1rem;">🐾 ${c.mascota}</strong>
-        <span style="color: #6ee7b7; font-weight: bold; font-size: 0.82rem;">${c.estado}</span>
+    <div class="tarjeta-admin">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <strong>🐾 ${c.mascota}</strong>
+        <span style="font-size:0.8rem; color:#6ee7b7; font-weight:600;">${c.estado}</span>
       </div>
-      <div style="margin: 0.3rem 0; color: #cbd5e1;">
-        <strong>Servicio:</strong> ${c.servicio}<br>
-        <strong>Fecha:</strong> ${c.fecha} — <strong>Hora:</strong> ${c.hora}<br>
-        <strong>Dueño:</strong> ${c.clienteNombre} (${c.clienteEmail})
+      <div class="meta-admin">
+        👤 Dueño: ${c.clienteNombre} (${c.clienteEmail}) • 📞 ${c.clienteTelefono || "Sin tel."}<br>
+        🩺 Servicio: <strong>${c.servicio}</strong><br>
+        📅 Fecha: <strong>${c.fecha}</strong> — 🕒 Hora: <strong>${c.hora}</strong>
       </div>
-      <div class="acciones-fila">
-        <button class="btn-mini" onclick="cambiarEstadoCita(${c.id}, 'Confirmada ✅')">Confirmar</button>
-        <button class="btn-mini" onclick="cambiarEstadoCita(${c.id}, 'Atendida 🩺')">Marcar Atendida</button>
-        <button class="btn-mini danger" onclick="eliminarCita(${c.id})">Eliminar</button>
+      <div class="acciones-admin">
+        <button class="btn-accion btn-confirmar" onclick="cambiarEstadoCita('${c.id}', 'Confirmada ✅')">Aceptar / Cubrir Horario ✅</button>
+        <button class="btn-accion btn-cancelar" onclick="cambiarEstadoCita('${c.id}', 'Rechazada ❌')">Rechazar ❌</button>
+        <button class="btn-accion btn-borrar" onclick="eliminarCita('${c.id}')">Eliminar 🗑️</button>
       </div>
     </div>
   `).join("");
-}
+});
 
-function cambiarEstadoCita(id, nuevoEstado) {
-  const citas = JSON.parse(localStorage.getItem("citasPatitas")) || [];
-  const index = citas.findIndex(c => c.id === id);
-  if (index !== -1) {
-    citas[index].estado = nuevoEstado;
-    localStorage.setItem("citasPatitas", JSON.stringify(citas));
-    renderizarCitas();
-  }
-}
+window.cambiarEstadoCita = async function(id, nuevoEstado) {
+  await updateDoc(doc(db, "citas", id), { estado: nuevoEstado });
+};
 
-function eliminarCita(id) {
-  let citas = JSON.parse(localStorage.getItem("citasPatitas")) || [];
-  citas = citas.filter(c => c.id !== id);
-  localStorage.setItem("citasPatitas", JSON.stringify(citas));
-  renderizarCitas();
-}
+window.eliminarCita = async function(id) {
+  await deleteDoc(doc(db, "citas", id));
+};
 
-// 4. BANDEJA DE MENSAJES DE CLIENTES
-function renderizarMensajes() {
-  const mensajes = JSON.parse(localStorage.getItem("mensajesPatitas")) || [];
-  document.getElementById("count-mensajes").textContent = mensajes.length;
-  const contenedor = document.getElementById("admin-lista-mensajes");
+// 4. MENSAJES RECIBIDOS EN TIEMPO REAL DESDE CUALQUIER DISPOSITIVO
+onSnapshot(collection(db, "mensajes"), (snapshot) => {
+  const contenedor = document.getElementById("lista-mensajes-admin");
+  const mensajes = snapshot.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
+  const badgeMensajes = document.getElementById("contador-mensajes");
+  if (badgeMensajes) badgeMensajes.textContent = mensajes.length;
+
+  if (!contenedor) return;
   if (mensajes.length === 0) {
-    contenedor.innerHTML = `<p style="color: #6b7280;">Bandeja vacía. Aún no hay mensajes de clientes.</p>`;
+    contenedor.innerHTML = `<p style="color: #6b7280; font-size: 0.9rem;">Bandeja vacía. Aún no hay mensajes.</p>`;
     return;
   }
 
   contenedor.innerHTML = mensajes.map(m => `
-    <div class="registro-item" style="border-left-color: ${m.leido ? '#4b5563' : '#10b981'};">
-      <div style="display: flex; justify-content: space-between;">
-        <strong style="color: #ffffff;">${m.nombre}</strong>
-        <span style="color: #9ca3af; font-size: 0.78rem;">${m.fecha}</span>
+    <div class="tarjeta-admin">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <strong>✉️ ${m.asunto || "Consulta"}</strong>
+        <span style="font-size:0.78rem; color:#9ca3af;">${m.fecha}</span>
       </div>
-      <div style="color: #6ee7b7; font-size: 0.8rem; margin-bottom: 0.4rem;">${m.correo}</div>
-      <p style="margin: 0.4rem 0; color: #e5e7eb; line-height: 1.4;">"${m.texto}"</p>
-      <div class="acciones-fila">
-        ${!m.leido ? `<button class="btn-mini" onclick="marcarLeido(${m.id})">Marcar Leído ✓</button>` : `<span style="font-size: 0.75rem; color: #9ca3af;">Leído ✓</span>`}
-        <button class="btn-mini danger" onclick="eliminarMensaje(${m.id})">Borrar</button>
+      <div class="meta-admin">
+        De: <strong>${m.nombre}</strong> (<a href="mailto:${m.correo}" style="color:#6ee7b7;">${m.correo}</a>)
+      </div>
+      <p style="margin: 0.6rem 0; color: #e5e7eb; font-size: 0.9rem;">${m.texto}</p>
+      <div class="acciones-admin">
+        <button class="btn-accion btn-borrar" onclick="eliminarMensaje('${m.id}')">Eliminar Mensaje 🗑️</button>
       </div>
     </div>
   `).join("");
-}
+});
 
-function marcarLeido(id) {
-  const mensajes = JSON.parse(localStorage.getItem("mensajesPatitas")) || [];
-  const index = mensajes.findIndex(m => m.id === id);
-  if (index !== -1) {
-    mensajes[index].leido = true;
-    localStorage.setItem("mensajesPatitas", JSON.stringify(mensajes));
-    renderizarMensajes();
-  }
-}
+window.eliminarMensaje = async function(id) {
+  await deleteDoc(doc(db, "mensajes", id));
+};
 
-function eliminarMensaje(id) {
-  let mensajes = JSON.parse(localStorage.getItem("mensajesPatitas")) || [];
-  mensajes = mensajes.filter(m => m.id !== id);
-  localStorage.setItem("mensajesPatitas", JSON.stringify(mensajes));
-  renderizarMensajes();
-}
-
-// Inicializar vista del administrador
-renderizarHorarios();
-renderizarCitas();
-renderizarMensajes();
+cargarHorariosAdmin();

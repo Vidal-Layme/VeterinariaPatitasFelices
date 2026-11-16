@@ -1,16 +1,20 @@
+import { db } from "./firebase-config.js";
+import { collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 // ==========================================
 // 0. CONFIGURACIÓN EMAILJS Y CREDENCIALES DEL DUEÑO
 // ==========================================
-emailjs.init("uU9kSHWRtQL8zIkaQ");
+if (typeof emailjs !== "undefined") {
+  emailjs.init("uU9kSHWRtQL8zIkaQ");
+}
 
 const SERVICE_ID = "service_0gugqmk";
 const TEMPLATE_ID = "template_rjb3epc";
 
-// Cuenta fija del Dueño / Administrador
 const ADMIN_CONFIG = {
   nombre: "Vidal (Dueño)",
   email: "vidal26m@gmail.com",
-  pass: "admin123", // 👈 Cambia esta contraseña maestra por la que tú quieras
+  pass: "admin123",
   rol: "admin"
 };
 
@@ -32,20 +36,21 @@ function limpiarFormularios() {
   if (formVerificar) formVerificar.reset();
 }
 
-function abrirModal() {
+// Exponemos en window para que funcionen los onclick del HTML con type="module"
+window.abrirModal = function() {
   limpiarFormularios();
   if (modalTabs) modalTabs.style.display = "flex";
   if (formVerificar) formVerificar.style.display = "none";
-  cambiarTab("login");
+  window.cambiarTab("login");
   if (modal) modal.style.display = "flex";
-}
+};
 
-function cerrarModal() {
+window.cerrarModal = function() {
   if (modal) modal.style.display = "none";
   limpiarFormularios();
-}
+};
 
-function cambiarTab(tipo) {
+window.cambiarTab = function(tipo) {
   const tabLogin = document.getElementById("tab-login");
   const tabReg = document.getElementById("tab-registro");
 
@@ -53,17 +58,22 @@ function cambiarTab(tipo) {
   if (formVerificar) formVerificar.style.display = "none";
 
   if (tipo === "login") {
-    formLogin.style.display = "block";
-    formReg.style.display = "none";
-    tabLogin.classList.add("activo");
-    tabReg.classList.remove("activo");
+    if (formLogin) formLogin.style.display = "block";
+    if (formReg) formReg.style.display = "none";
+    if (tabLogin) tabLogin.classList.add("activo");
+    if (tabReg) tabReg.classList.remove("activo");
   } else {
-    formLogin.style.display = "none";
-    formReg.style.display = "block";
-    tabReg.classList.add("activo");
-    tabLogin.classList.remove("activo");
+    if (formLogin) formLogin.style.display = "none";
+    if (formReg) formReg.style.display = "block";
+    if (tabReg) tabReg.classList.add("activo");
+    if (tabLogin) tabLogin.classList.remove("activo");
   }
-}
+};
+
+window.cerrarSesion = function() {
+  localStorage.removeItem("sesionActiva");
+  location.reload();
+};
 
 // REGISTRO DE CLIENTES CON VERIFICACIÓN POR CORREO
 if (formReg) {
@@ -75,10 +85,9 @@ if (formReg) {
     const pass = document.getElementById("reg-pass").value;
     const btnRegistrar = document.getElementById("btn-registrar");
 
-    // Evitar que alguien registre el correo del dueño como cliente
     if (email === ADMIN_CONFIG.email.toLowerCase()) {
       alert("⚠️ Este correo pertenece a la administración. Inicia sesión directamente.");
-      cambiarTab("login");
+      window.cambiarTab("login");
       return;
     }
 
@@ -88,7 +97,7 @@ if (formReg) {
     ahora.setMinutes(ahora.getMinutes() + 15);
     const horaLimite = ahora.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
-    usuarioPendiente = { nombre, email, pass, rol: "cliente" };
+    usuarioPendiente = { nombre, email, pass, rol: "cliente", telefono: "", direccion: "" };
 
     btnRegistrar.textContent = "Enviando código... ⏳";
     btnRegistrar.disabled = true;
@@ -117,55 +126,62 @@ if (formReg) {
   });
 }
 
-// VERIFICAR CÓDIGO Y REDIRIGIR AL PORTAL DEL CLIENTE
+// VERIFICAR CÓDIGO Y GUARDAR CLIENTE EN FIREBASE
 if (formVerificar) {
-  formVerificar.addEventListener("submit", (e) => {
+  formVerificar.addEventListener("submit", async (e) => {
     e.preventDefault();
     const codigoIngresado = document.getElementById("input-codigo").value.trim();
 
     if (codigoIngresado === codigoGenerado && usuarioPendiente) {
-      let usuarios = JSON.parse(localStorage.getItem("usuariosPatitas")) || [];
-      usuarios = usuarios.filter(u => u.email !== usuarioPendiente.email);
-      usuarios.push(usuarioPendiente);
+      try {
+        const docRef = await addDoc(collection(db, "usuarios"), usuarioPendiente);
+        const sesionConId = { id: docRef.id, ...usuarioPendiente };
 
-      localStorage.setItem("usuariosPatitas", JSON.stringify(usuarios));
-      localStorage.setItem("sesionActiva", JSON.stringify(usuarioPendiente));
-
-      alert(`¡Cuenta verificada! Bienvenido a tu portal, ${usuarioPendiente.nombre} 🐾`);
-      window.location.href = "cliente.html"; // Redirige directo a la vista del cliente
+        localStorage.setItem("sesionActiva", JSON.stringify(sesionConId));
+        alert(`¡Cuenta verificada en la nube! Bienvenido a tu portal, ${usuarioPendiente.nombre} 🐾`);
+        window.location.href = "cliente.html";
+      } catch (err) {
+        console.error("Error guardando en Firebase:", err);
+        alert("Error al registrar usuario en la nube.");
+      }
     } else {
       alert("❌ El código ingresado no es correcto. Revisa tu correo e inténtalo de nuevo.");
     }
   });
 }
 
-// INICIO DE SESIÓN CON DETECCIÓN DE ROL (DUEÑO VS CLIENTE)
+// INICIO DE SESIÓN CON DETECCIÓN DE ROL (DUEÑO VS CLIENTE EN FIREBASE)
 if (formLogin) {
-  formLogin.addEventListener("submit", (e) => {
+  formLogin.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("login-email").value.trim().toLowerCase();
     const pass = document.getElementById("login-pass").value;
 
-    // 1. Si es el correo del Dueño, SOLO valida contra ADMIN_CONFIG
     if (email === ADMIN_CONFIG.email.toLowerCase()) {
       if (pass === ADMIN_CONFIG.pass) {
         localStorage.setItem("sesionActiva", JSON.stringify(ADMIN_CONFIG));
-        window.location.href = "admin.html"; // Redirige al panel del Dueño
+        window.location.href = "admin.html";
       } else {
         alert("❌ Contraseña de administrador incorrecta.");
       }
-      return; // Corta aquí para que jamás lo busque como cliente
+      return;
     }
 
-    // 2. Si no es el dueño, buscar en los clientes registrados
-    const usuarios = JSON.parse(localStorage.getItem("usuariosPatitas")) || [];
-    const cliente = usuarios.find(u => u.email.toLowerCase() === email && u.pass === pass);
+    try {
+      const q = query(collection(db, "usuarios"), where("email", "==", email), where("pass", "==", pass));
+      const snapshot = await getDocs(q);
 
-    if (cliente) {
-      localStorage.setItem("sesionActiva", JSON.stringify(cliente));
-      window.location.href = "cliente.html"; // Redirige al panel del Cliente
-    } else {
-      alert("⚠️ Correo o contraseña incorrectos, o aún no has verificado tu cuenta.");
+      if (!snapshot.empty) {
+        const docUser = snapshot.docs[0];
+        const cliente = { id: docUser.id, ...docUser.data() };
+        localStorage.setItem("sesionActiva", JSON.stringify(cliente));
+        window.location.href = "cliente.html";
+      } else {
+        alert("⚠️ Correo o contraseña incorrectos, o aún no has verificado tu cuenta.");
+      }
+    } catch (err) {
+      console.error("Error al consultar Firebase:", err);
+      alert("⚠️ No se pudo conectar con la base de datos. Asegúrate de abrir la página con Live Server o GitHub Pages.");
     }
   });
 }
@@ -185,7 +201,6 @@ function actualizarBarraUsuario(sesion) {
     `;
   }
 
-  // Autocompletar el formulario de mensaje al dueño
   const inputNombre = document.getElementById("msg-nombre");
   const inputCorreo = document.getElementById("msg-correo");
 
@@ -199,17 +214,7 @@ function actualizarBarraUsuario(sesion) {
   }
 }
 
-function cerrarSesion() {
-  localStorage.removeItem("sesionActiva");
-  location.reload();
-}
-
 window.addEventListener("DOMContentLoaded", () => {
-  // Limpia cualquier cuenta de cliente vieja que tuviera el correo del dueño
-  let usuarios = JSON.parse(localStorage.getItem("usuariosPatitas")) || [];
-  usuarios = usuarios.filter(u => u.email.toLowerCase() !== ADMIN_CONFIG.email.toLowerCase());
-  localStorage.setItem("usuariosPatitas", JSON.stringify(usuarios));
-
   const sesion = JSON.parse(localStorage.getItem("sesionActiva"));
   if (sesion) {
     actualizarBarraUsuario(sesion);
@@ -218,46 +223,41 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("click", (event) => {
   if (event.target === modal) {
-    cerrarModal();
+    window.cerrarModal();
   }
 });
+
 // ==========================================
-// 2. ENVIAR MENSAJE / CONSULTA AL DUEÑO (PROTEGIDO POR SESIÓN)
+// 2. ENVIAR MENSAJE / CONSULTA AL DUEÑO (FIREBASE)
 // ==========================================
 const formMensajeDueno = document.getElementById("form-mensaje-dueno");
 
 if (formMensajeDueno) {
-  formMensajeDueno.addEventListener("submit", (e) => {
+  formMensajeDueno.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // 1. Verificar si el usuario ya inició sesión
     const sesion = JSON.parse(localStorage.getItem("sesionActiva"));
 
     if (!sesion) {
       alert("🔒 Para enviar un mensaje al veterinario, primero debes iniciar sesión o crear tu cuenta.");
-      abrirModal(); // Le abre la ventana de login/registro al instante
+      window.abrirModal();
       return;
     }
 
-    // 2. Si sí tiene sesión iniciada, guardamos el mensaje con sus datos verificados
     const texto = document.getElementById("msg-texto").value.trim();
 
-    const nuevoMensaje = {
-      id: Date.now(),
-      nombre: sesion.nombre, // Toma el nombre real de su cuenta
-      correo: sesion.email,  // Toma el correo verificado de su cuenta
+    await addDoc(collection(db, "mensajes"), {
+      nombre: sesion.nombre,
+      correo: sesion.email,
       asunto: "Consulta desde la portada",
       texto: texto,
       fecha: new Date().toLocaleString([], { dateStyle: "short", timeStyle: "short" }),
+      timestamp: Date.now(),
       leido: false
-    };
+    });
 
-    const mensajes = JSON.parse(localStorage.getItem("mensajesPatitas")) || [];
-    mensajes.unshift(nuevoMensaje);
-    localStorage.setItem("mensajesPatitas", JSON.stringify(mensajes));
-
-    alert(`✅ ¡Mensaje enviado, ${sesion.nombre}! El veterinario te responderá pronto.`);
-    formMensajeDueno.reset();
+    alert(`✅ ¡Mensaje enviado, ${sesion.nombre}! El veterinario lo verá al instante en su dispositivo.`);
+    document.getElementById("msg-texto").value = "";
   });
 }
 
