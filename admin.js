@@ -27,7 +27,7 @@ async function cargarHorariosAdmin() {
 }
 
 function renderizarHorariosAdmin() {
-  const contenedor = document.getElementById("lista-horarios-admin");
+  const contenedor = document.getElementById("admin-horarios");
   if (!contenedor) return;
 
   contenedor.innerHTML = horarios.map((hora, index) => `
@@ -38,11 +38,11 @@ function renderizarHorariosAdmin() {
   `).join("");
 }
 
-const formHorario = document.getElementById("form-horario");
+const formHorario = document.getElementById("form-agregar-hora");
 if (formHorario) {
   formHorario.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const nuevaHora = document.getElementById("nuevo-horario").value.trim().toUpperCase();
+    const nuevaHora = document.getElementById("nueva-hora").value.trim().toUpperCase();
     if (nuevaHora && !horarios.includes(nuevaHora)) {
       horarios.push(nuevaHora);
       await setDoc(doc(db, "config", "horarios"), { lista: horarios });
@@ -60,12 +60,12 @@ window.eliminarHorario = async function(index) {
 
 // 3. CITAS EN TIEMPO REAL (ACEPTAR BLOQUEA EL HORARIO AL RESTO)
 onSnapshot(collection(db, "citas"), (snapshot) => {
-  const contenedor = document.getElementById("lista-citas-admin");
+  const contenedor = document.getElementById("admin-lista-citas");
   const citas = snapshot.docs
     .map(d => ({ id: d.id, ...d.data() }))
     .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-  const badgeCitas = document.getElementById("contador-citas");
+  const badgeCitas = document.getElementById("count-citas");
   if (badgeCitas) badgeCitas.textContent = citas.length;
 
   if (!contenedor) return;
@@ -104,12 +104,12 @@ window.eliminarCita = async function(id) {
 
 // 4. MENSAJES RECIBIDOS EN TIEMPO REAL DESDE CUALQUIER DISPOSITIVO
 onSnapshot(collection(db, "mensajes"), (snapshot) => {
-  const contenedor = document.getElementById("lista-mensajes-admin");
+  const contenedor = document.getElementById("admin-lista-mensajes");
   const mensajes = snapshot.docs
     .map(d => ({ id: d.id, ...d.data() }))
     .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-  const badgeMensajes = document.getElementById("contador-mensajes");
+  const badgeMensajes = document.getElementById("count-mensajes");
   if (badgeMensajes) badgeMensajes.textContent = mensajes.length;
 
   if (!contenedor) return;
