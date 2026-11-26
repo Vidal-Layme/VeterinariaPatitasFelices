@@ -1,0 +1,257 @@
+/* ==========================================
+   ESTILOS COMPARTIDOS PARA SECCIONES DEL PROYECTO
+   ========================================== */
+.seccion-container {
+  max-width: 1050px;
+  margin: 2.5rem auto 4rem;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.seccion-hero {
+  background: linear-gradient(145deg, rgba(16, 185, 129, 0.12), rgba(15, 31, 25, 0.9));
+  border: 1px solid rgba(110, 231, 183, 0.25);
+  border-radius: 18px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.seccion-hero h1 {
+  color: #6ee7b7;
+  font-size: 1.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.seccion-hero p {
+  color: #cbd5e1;
+  font-size: 1rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.card-contenido {
+  background: #0f1f19;
+  border: 1px solid rgba(110, 231, 183, 0.18);
+  border-radius: 16px;
+  padding: 1.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card-contenido h2 {
+  color: #6ee7b7;
+  font-size: 1.3rem;
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-contenido p, .card-contenido li {
+  color: #e5e7eb;
+  line-height: 1.65;
+  font-size: 0.96rem;
+}
+
+.card-contenido ul {
+  padding-left: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.grid-dos-columnas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Contenedor responsivo para diagramas o imágenes */
+.marco-diagrama {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(110, 231, 183, 0.35);
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.marco-diagrama img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Contenedor responsivo 16:9 para el Video */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(110, 231, 183, 0.3);
+  margin-top: 1rem;
+}
+
+.video-wrapper iframe,
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Formulario en Contactos */
+.form-contacto-pagina {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-contacto-pagina input,
+.form-contacto-pagina textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(110, 231, 183, 0.25);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.form-contacto-pagina input:focus,
+.form-contacto-pagina textarea:focus {
+  outline: none;
+  border-color: #10b981;
+}
+
+/* ==========================================
+   ESQUEMA INTERACTIVO CON TOOLTIP HOVER (2 LÍNEAS)
+   ========================================== */
+.esquema-hover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.rama-hover {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.grid-modelos {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.4rem;
+}
+
+.caja-modelo {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(110, 231, 183, 0.2);
+  border-radius: 14px;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.lista-hover {
+  list-style: none !important;
+  padding-left: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.nodo-hover,
+.item-hover {
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.nodo-hover.nivel-1 {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(110, 231, 183, 0.45);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.8rem 1.2rem;
+  text-align: center;
+}
+
+.nodo-hover.nivel-2 {
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(110, 231, 183, 0.35);
+  color: #6ee7b7;
+  font-weight: 600;
+  padding: 0.7rem 1.1rem;
+  text-align: center;
+}
+
+.nodo-hover.nivel-3 {
+  background: rgba(15, 31, 25, 0.95);
+  border: 1px solid rgba(110, 231, 183, 0.3);
+  color: #6ee7b7;
+  font-weight: 600;
+  padding: 0.65rem 0.95rem;
+  text-align: center;
+}
+
+.item-hover {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(110, 231, 183, 0.16);
+  color: #e5e7eb;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.92rem;
+}
+
+.nodo-hover:hover,
+.item-hover:hover {
+  transform: translateY(-2px);
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.16);
+}
+
+/* Mensajito emergente de 2 líneas */
+.nodo-hover::after,
+.item-hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: max-content;
+  max-width: 340px;
+  background: #07120e;
+  color: #f3f4f6;
+  border: 1px solid #10b981;
+  border-radius: 10px;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: left;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nodo-hover:hover::after,
+.item-hover:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

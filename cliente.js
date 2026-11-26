@@ -236,3 +236,30 @@ onSnapshot(qMisMensajes, (snapshot) => {
 });
 
 cargarHorariosConfig();
+
+// MENÚ DESPLEGABLE DE 3 RAYAS EN CLIENTE
+const btnHamburguesa = document.getElementById("btn-menu-hamburguesa");
+const dropdownCliente = document.getElementById("dropdown-cliente");
+const menuWrapper = document.getElementById("menu-hamburguesa-wrapper");
+
+if (btnHamburguesa && dropdownCliente && menuWrapper) {
+  btnHamburguesa.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const estaAbierto = dropdownCliente.classList.toggle("abierto");
+    btnHamburguesa.setAttribute("aria-expanded", estaAbierto ? "true" : "false");
+  });
+
+  dropdownCliente.querySelectorAll("a").forEach((enlace) => {
+    enlace.addEventListener("click", () => {
+      dropdownCliente.classList.remove("abierto");
+      btnHamburguesa.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!menuWrapper.contains(e.target)) {
+      dropdownCliente.classList.remove("abierto");
+      btnHamburguesa.setAttribute("aria-expanded", "false");
+    }
+  });
+}

@@ -3,80 +3,567 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orientado a Objetos - Veterinaria San Roque 🐾</title>
+  <title>Orientado a Objetos (UML) — Veterinaria Patitas Felices 🐾</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cliente.css">
+  <link rel="stylesheet" href="secciones.css">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .intro-objetos {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.14), rgba(15, 31, 25, 0.92));
+      border: 1px solid rgba(110, 231, 183, 0.28);
+      border-radius: 18px;
+      padding: 2rem;
+    }
+
+    .intro-objetos h1 {
+      color: #6ee7b7;
+      font-size: 1.9rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .intro-objetos p {
+      color: #e5e7eb;
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+
+    .panel-botones-uml {
+      background: #0f1f19;
+      border: 1px solid rgba(110, 231, 183, 0.22);
+      border-radius: 18px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+    }
+
+    .panel-botones-uml h2 {
+      color: #6ee7b7;
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    .etiqueta-uml {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #9ca3af;
+      display: block;
+      margin-bottom: 0.65rem;
+    }
+
+    .fila-botones-uml {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    /* Botón llamativo con tooltip hover de 2 líneas */
+    .btn-uml-hover {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.94rem;
+      padding: 0.85rem 1.25rem;
+      border-radius: 14px;
+      color: #f9fafb;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(5, 150, 105, 0.12));
+      border: 1px solid rgba(110, 231, 183, 0.4);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .btn-uml-hover.destacado {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #062016;
+      border-color: #6ee7b7;
+      box-shadow: 0 8px 22px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-uml-hover.sub-secuencia {
+      background: rgba(255, 255, 255, 0.04);
+      color: #d1fae5;
+      border-color: rgba(110, 231, 183, 0.25);
+      font-size: 0.88rem;
+      padding: 0.72rem 1.05rem;
+    }
+
+    .btn-uml-hover:hover {
+      transform: translateY(-3px) scale(1.02);
+      border-color: #6ee7b7;
+      box-shadow: 0 12px 26px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-uml-hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(5px);
+      width: max-content;
+      max-width: 340px;
+      background: #06100c;
+      color: #f3f4f6;
+      border: 1px solid #10b981;
+      border-radius: 12px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 400;
+      line-height: 1.35;
+      text-align: left;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.65);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 60;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .btn-uml-hover:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .bloque-ancla {
+      scroll-margin-top: 90px;
+    }
+
+    .svg-uml-box {
+      background: #08130f;
+      border: 1px solid rgba(110, 231, 183, 0.25);
+      border-radius: 14px;
+      padding: 1rem;
+      margin-top: 1rem;
+      overflow-x: auto;
+    }
+
+    .svg-uml-box svg {
+      width: 100%;
+      min-width: 680px;
+      height: auto;
+      display: block;
+    }
+
+    .subcard-secuencia {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(110, 231, 183, 0.18);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-top: 1.2rem;
+    }
+
+    .subcard-secuencia h3 {
+      color: #6ee7b7;
+      font-size: 1.1rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .volver-arriba {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #6ee7b7;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .volver-arriba:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="logo">🐾 <a href="index.html">Veterinaria San Roque</a></div>
-    <nav class="nav-menu">
-      <a href="index.html" class="nav-link">Inicio</a>
-      <a href="marco-teorico.html" class="nav-link">Marco Teórico</a>
-      <div class="dropdown-item">
-        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-estructurado')">
-          Análisis Estructurado ▾
-          <span class="tooltip">Modelado clásico por procesos: DFD, DER y Diccionario. 📊</span>
-        </button>
-        <div id="menu-estructurado" class="dropdown-menu">
-          <a href="estructurado.html#dfd">Diagrama de Flujo de Datos</a>
-          <a href="estructurado.html#der">Modelo Entidad-Relación</a>
-          <a href="estructurado.html#diccionario">Diccionario de Datos</a>
-        </div>
+  <header class="topbar">
+    <div class="logo" style="cursor: pointer;" onclick="window.location.href='cliente.html'">
+      <span class="logo-icon">🐾</span>
+      <span class="logo-text">Patitas Felices</span>
+    </div>
+
+    <div class="topbar-action">
+      <span id="saludo-usuario-nav" class="cliente-badge-nombre">Hola 🐾</span>
+      <button id="btn-salir-nav" class="btn-outline" onclick="cerrarSesionGlobal()">Salir</button>
+
+      <div class="menu-hamburguesa-wrapper" id="menu-hamburguesa-wrapper">
+        <button type="button" id="btn-menu-hamburguesa" class="btn-hamburguesa" aria-label="Abrir menú" aria-expanded="false">☰</button>
+        <nav id="dropdown-cliente" class="dropdown-menu-cliente">
+          <a id="link-inicio-menu" href="cliente.html" class="dropdown-item-cliente">Inicio</a>
+          <a href="marco-teorico.html" class="dropdown-item-cliente">Marco Teórico</a>
+          <a href="estructurado.html" class="dropdown-item-cliente">Análisis Estructurado</a>
+          <a href="objetos.html" class="dropdown-item-cliente">Orientado a Objetos</a>
+          <a href="video.html" class="dropdown-item-cliente">Video</a>
+          <a href="contactos.html" class="dropdown-item-cliente">Contáctanos</a>
+        </nav>
       </div>
-      <div class="dropdown-item">
-        <button type="button" class="nav-link dropdown-toggle activo" onclick="toggleDropdown('menu-oo')">
-          Orientado a Objetos ▾
-          <span class="tooltip">Paradigma UML: Casos de uso, clases y secuencias. 🧩</span>
-        </button>
-        <div id="menu-oo" class="dropdown-menu">
-          <a href="#casos-uso">Casos de Uso</a>
-          <a href="#clases">Diagrama de Clases</a>
-          <a href="#secuencia">Diagrama de Secuencia</a>
-        </div>
-      </div>
-      <div class="nav-item-tooltip">
-        <a href="video.html" class="nav-link">
-          Video 🎥
-          <span class="tooltip">Demostración audiovisual del sistema. 🍿</span>
-        </a>
-      </div>
-      <a href="contactos.html" class="nav-link">Contactos</a>
-    </nav>
-    <div class="auth-box">
-      <a href="index.html" class="btn-primary" style="text-decoration:none;">Acceso al Sistema</a>
     </div>
   </header>
 
-  <main class="contenedor">
-    <section class="card" id="casos-uso">
-      <h2>Diagrama de Casos de Uso (UML) 👥</h2>
-      <p style="margin-top:0.5rem;">Definición de interacción entre los actores del software:</p>
-      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
-        <p><strong>[Diagrama de Casos de Uso]</strong></p>
-        <small>Actores: Cliente (Registrar Cita, Cancelar Cita) | Administrador (Aprobar Turnos, Gestionar Horarios)</small>
+  <main class="seccion-container" id="top-objetos">
+    <!-- EXPLICACIÓN DEL PARADIGMA ORIENTADO A OBJETOS Y UML -->
+    <section class="intro-objetos">
+      <h1>🧱 Paradigma Orientado a Objetos (UML)</h1>
+      <p>
+        El <strong>paradigma orientado a objetos</strong> modela el software a partir de objetos del mundo real que combinan datos (atributos) y comportamiento (métodos). Para diseñar, visualizar y documentar la estructura y dinámica de <strong>Veterinaria Patitas Felices</strong>, utiliza el <strong>Lenguaje Unificado de Modelado (UML)</strong>, permitiendo generar diagramas clave como el <strong>Diagrama de Clases</strong>, el <strong>Diagrama de Casos de Uso</strong> y los <strong>Diagramas de Secuencia</strong>.
+      </p>
+    </section>
+
+    <!-- PANEL INTERACTIVO DE BOTONES UML -->
+    <section class="panel-botones-uml">
+      <h2>⚡ Diagramas UML del Proyecto (Pasa el cursor o haz clic)</h2>
+
+      <div>
+        <span class="etiqueta-uml">Diagramas Principales UML</span>
+        <div class="fila-botones-uml">
+          <a href="#diagrama-clases"
+             class="btn-uml-hover destacado"
+             data-tooltip="Muestra las clases del sistema, sus atributos, métodos y relaciones. Define la estructura estática de los datos en Patitas Felices.">
+            📐 Diagrama de Clases
+          </a>
+
+          <a href="#diagrama-casos-uso"
+             class="btn-uml-hover"
+             data-tooltip="Representa las interacciones entre los actores (Cliente, Dueño) y las funciones del sistema. Resume qué puede hacer cada rol.">
+            🎭 Diagrama de Casos de Uso
+          </a>
+
+          <a href="#diagramas-secuencia"
+             class="btn-uml-hover"
+             data-tooltip="Detalla el orden cronológico de mensajes entre objetos en un proceso. Muestra cómo colaboran interfaz, lógica y Firestore.">
+            ⏱️ Diagramas de Secuencia
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <span class="etiqueta-uml">Accesos Directos a los 3 Diagramas de Secuencia</span>
+        <div class="fila-botones-uml">
+          <a href="#secuencia-registro"
+             class="btn-uml-hover sub-secuencia"
+             data-tooltip="Muestra el flujo de registro de cliente, envío de código por EmailJS y guardado de usuario en Firestore.">
+            1️⃣ Secuencia: Registro y Verificación
+          </a>
+          <a href="#secuencia-citas"
+             class="btn-uml-hover sub-secuencia"
+             data-tooltip="Detalla cómo el cliente solicita una cita y cómo el dueño la confirma bloqueando el horario en vivo.">
+            2️⃣ Secuencia: Solicitud y Aprobación de Cita
+          </a>
+          <a href="#secuencia-mensajes"
+             class="btn-uml-hover sub-secuencia"
+             data-tooltip="Ilustra el envío de una consulta del cliente y su recepción instantánea en el panel administrativo.">
+            3️⃣ Secuencia: Mensajería en Tiempo Real
+          </a>
+        </div>
       </div>
     </section>
 
-    <section class="card" id="clases" style="margin-top:2rem;">
-      <h2>Diagrama de Clases 🧩</h2>
-      <p style="margin-top:0.5rem;">Modelado estructural orientado a objetos y relaciones de herencia:</p>
-      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
-        <p><strong>[Diagrama de Clases del Sistema]</strong></p>
-        <small>Clases: Usuario ➔ Cliente / Administrador | Mascota | CitaMedica | Agenda</small>
-      </div>
-    </section>
+    <!-- 1. DIAGRAMA DE CLASES -->
+    <article id="diagrama-clases" class="card-contenido bloque-ancla">
+      <h2>📐 Diagrama de Clases</h2>
+      <p>Modela la estructura estática del sistema Veterinaria Patitas Felices, especificando las clases principales (<strong>Usuario</strong>, <strong>Mascota</strong>, <strong>Cita</strong>, <strong>Mensaje</strong> y <strong>ConfigHorarios</strong>), sus atributos, operaciones y multiplicidades.</p>
 
-    <section class="card" id="secuencia" style="margin-top:2rem;">
-      <h2>Diagrama de Secuencia ⏳</h2>
-      <p style="margin-top:0.5rem;">Intercambio cronológico de mensajes al agendar una consulta:</p>
-      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
-        <p><strong>[Diagrama de Secuencia: Agendar Cita]</strong></p>
-        <small>Cliente ➔ UI ➔ AuthController ➔ CitaController ➔ BaseDeDatos</small>
+      <div class="svg-uml-box">
+        <svg viewBox="0 0 920 430" xmlns="http://www.w3.org/2000/svg">
+          <!-- CLASE USUARIO -->
+          <rect x="20" y="25" width="245" height="175" rx="10" fill="#0f261e" stroke="#10b981" stroke-width="2"/>
+          <line x1="20" y1="62" x2="265" y2="62" stroke="#10b981" stroke-width="1.5"/>
+          <line x1="20" y1="145" x2="265" y2="145" stroke="#10b981" stroke-width="1.5"/>
+          <text x="142" y="48" fill="#6ee7b7" font-size="15" font-weight="bold" text-anchor="middle">Usuario</text>
+          <text x="32" y="82" fill="#e5e7eb" font-size="12">- id: String</text>
+          <text x="32" y="99" fill="#e5e7eb" font-size="12">- nombre: String</text>
+          <text x="32" y="116" fill="#e5e7eb" font-size="12">- email: String</text>
+          <text x="32" y="133" fill="#e5e7eb" font-size="12">- rol: String (cliente | admin)</text>
+          <text x="32" y="165" fill="#a7f3d0" font-size="12">+ iniciarSesion()</text>
+          <text x="32" y="183" fill="#a7f3d0" font-size="12">+ actualizarPerfil()</text>
+
+          <!-- CLASE MASCOTA -->
+          <rect x="345" y="25" width="235" height="175" rx="10" fill="#0f261e" stroke="#10b981" stroke-width="2"/>
+          <line x1="345" y1="62" x2="580" y2="62" stroke="#10b981" stroke-width="1.5"/>
+          <line x1="345" y1="145" x2="580" y2="145" stroke="#10b981" stroke-width="1.5"/>
+          <text x="462" y="48" fill="#6ee7b7" font-size="15" font-weight="bold" text-anchor="middle">Mascota</text>
+          <text x="357" y="82" fill="#e5e7eb" font-size="12">- id: String</text>
+          <text x="357" y="99" fill="#e5e7eb" font-size="12">- duenoEmail: String</text>
+          <text x="357" y="116" fill="#e5e7eb" font-size="12">- nombre, especie, raza</text>
+          <text x="357" y="133" fill="#e5e7eb" font-size="12">- edad, notas: String</text>
+          <text x="357" y="165" fill="#a7f3d0" font-size="12">+ registrarMascota()</text>
+          <text x="357" y="183" fill="#a7f3d0" font-size="12">+ eliminarMascota()</text>
+
+          <!-- CLASE CITA -->
+          <rect x="655" y="25" width="245" height="185" rx="10" fill="#0f261e" stroke="#10b981" stroke-width="2"/>
+          <line x1="655" y1="62" x2="900" y2="62" stroke="#10b981" stroke-width="1.5"/>
+          <line x1="655" y1="152" x2="900" y2="152" stroke="#10b981" stroke-width="1.5"/>
+          <text x="777" y="48" fill="#6ee7b7" font-size="15" font-weight="bold" text-anchor="middle">Cita</text>
+          <text x="667" y="82" fill="#e5e7eb" font-size="12">- id, clienteEmail: String</text>
+          <text x="667" y="99" fill="#e5e7eb" font-size="12">- mascota, servicio: String</text>
+          <text x="667" y="116" fill="#e5e7eb" font-size="12">- fecha, hora: String</text>
+          <text x="667" y="133" fill="#e5e7eb" font-size="12">- estado: String</text>
+          <text x="667" y="172" fill="#a7f3d0" font-size="12">+ solicitarCita()</text>
+          <text x="667" y="190" fill="#a7f3d0" font-size="12">+ cambiarEstado()</text>
+
+          <!-- CLASE MENSAJE -->
+          <rect x="130" y="255" width="255" height="155" rx="10" fill="#0f261e" stroke="#10b981" stroke-width="2"/>
+          <line x1="130" y1="292" x2="385" y2="292" stroke="#10b981" stroke-width="1.5"/>
+          <line x1="130" y1="365" x2="385" y2="365" stroke="#10b981" stroke-width="1.5"/>
+          <text x="257" y="278" fill="#6ee7b7" font-size="15" font-weight="bold" text-anchor="middle">Mensaje</text>
+          <text x="142" y="312" fill="#e5e7eb" font-size="12">- nombre, correo: String</text>
+          <text x="142" y="329" fill="#e5e7eb" font-size="12">- asunto, texto: String</text>
+          <text x="142" y="346" fill="#e5e7eb" font-size="12">- fecha: String, leido: Bool</text>
+          <text x="142" y="386" fill="#a7f3d0" font-size="12">+ enviarMensaje() / eliminar()</text>
+
+          <!-- CLASE CONFIG HORARIOS -->
+          <rect x="520" y="255" width="265" height="155" rx="10" fill="#0f261e" stroke="#10b981" stroke-width="2"/>
+          <line x1="520" y1="292" x2="785" y2="292" stroke="#10b981" stroke-width="1.5"/>
+          <line x1="520" y1="355" x2="785" y2="355" stroke="#10b981" stroke-width="1.5"/>
+          <text x="652" y="278" fill="#6ee7b7" font-size="15" font-weight="bold" text-anchor="middle">ConfigHorarios</text>
+          <text x="532" y="314" fill="#e5e7eb" font-size="12">- lista: Array&lt;String&gt;</text>
+          <text x="532" y="334" fill="#e5e7eb" font-size="12">- horasCubiertas: Array</text>
+          <text x="532" y="376" fill="#a7f3d0" font-size="12">+ agregarHora() / eliminarHora()</text>
+          <text x="532" y="394" fill="#a7f3d0" font-size="12">+ verificarDisponibilidad()</text>
+
+          <!-- RELACIONES -->
+          <line x1="265" y1="110" x2="345" y2="110" stroke="#6ee7b7" stroke-width="2"/>
+          <text x="275" y="102" fill="#6ee7b7" font-size="12">1</text>
+          <text x="322" y="102" fill="#6ee7b7" font-size="12">0..*</text>
+
+          <line x1="580" y1="110" x2="655" y2="110" stroke="#6ee7b7" stroke-width="2"/>
+          <text x="590" y="102" fill="#6ee7b7" font-size="12">1</text>
+          <text x="632" y="102" fill="#6ee7b7" font-size="12">0..*</text>
+
+          <line x1="180" y1="200" x2="210" y2="255" stroke="#6ee7b7" stroke-width="2"/>
+          <text x="165" y="218" fill="#6ee7b7" font-size="12">1</text>
+          <text x="190" y="248" fill="#6ee7b7" font-size="12">0..*</text>
+
+          <line x1="740" y1="210" x2="690" y2="255" stroke="#6ee7b7" stroke-width="2" stroke-dasharray="5,4"/>
+          <text x="728" y="238" fill="#9ca3af" font-size="11">consulta</text>
+        </svg>
       </div>
-    </section>
+
+      <a href="#top-objetos" class="volver-arriba">↑ Volver a los botones UML</a>
+    </article>
+
+    <!-- 2. DIAGRAMA DE CASOS DE USO -->
+    <article id="diagrama-casos-uso" class="card-contenido bloque-ancla">
+      <h2>🎭 Diagrama de Casos de Uso</h2>
+      <p>Ilustra los actores que interactúan con el sistema (<strong>Cliente</strong> y <strong>Administrador / Dueño</strong>) y los casos de uso disponibles dentro del límite del sistema <strong>Veterinaria Patitas Felices</strong>.</p>
+
+      <div class="svg-uml-box">
+        <svg viewBox="0 0 920 420" xmlns="http://www.w3.org/2000/svg">
+          <!-- LÍMITE DEL SISTEMA -->
+          <rect x="210" y="20" width="500" height="380" rx="16" fill="#0b1d17" stroke="#10b981" stroke-width="2"/>
+          <text x="460" y="48" fill="#6ee7b7" font-size="15" font-weight="bold" text-anchor="middle">Sistema Web Veterinaria Patitas Felices</text>
+
+          <!-- ACTOR CLIENTE -->
+          <circle cx="90" cy="145" r="18" fill="none" stroke="#6ee7b7" stroke-width="2.5"/>
+          <line x1="90" y1="163" x2="90" y2="220" stroke="#6ee7b7" stroke-width="2.5"/>
+          <line x1="60" y1="185" x2="120" y2="185" stroke="#6ee7b7" stroke-width="2.5"/>
+          <line x1="90" y1="220" x2="65" y2="260" stroke="#6ee7b7" stroke-width="2.5"/>
+          <line x1="90" y1="220" x2="115" y2="260" stroke="#6ee7b7" stroke-width="2.5"/>
+          <text x="90" y="285" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">Cliente</text>
+
+          <!-- ACTOR ADMINISTRADOR -->
+          <circle cx="830" cy="145" r="18" fill="none" stroke="#6ee7b7" stroke-width="2.5"/>
+          <line x1="830" y1="163" x2="830" y2="220" stroke="#6ee7b7" stroke-width="2.5"/>
+          <line x1="800" y1="185" x2="860" y2="185" stroke="#6ee7b7" stroke-width="2.5"/>
+          <line x1="830" y1="220" x2="805" y2="260" stroke="#6ee7b7" stroke-width="2.5"/>
+          <line x1="830" y1="220" x2="855" y2="260" stroke="#6ee7b7" stroke-width="2.5"/>
+          <text x="830" y="285" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">Dueño (Admin)</text>
+
+          <!-- CASOS DE USO -->
+          <ellipse cx="460" cy="88" rx="135" ry="24" fill="#133328" stroke="#6ee7b7" stroke-width="1.5"/>
+          <text x="460" y="93" fill="#f3f4f6" font-size="12.5" text-anchor="middle">Registrarse e Iniciar Sesión</text>
+
+          <ellipse cx="365" cy="152" rx="120" ry="23" fill="#133328" stroke="#6ee7b7" stroke-width="1.5"/>
+          <text x="365" y="157" fill="#f3f4f6" font-size="12.5" text-anchor="middle">Gestionar Mis Mascotas</text>
+
+          <ellipse cx="365" cy="216" rx="120" ry="23" fill="#133328" stroke="#6ee7b7" stroke-width="1.5"/>
+          <text x="365" y="221" fill="#f3f4f6" font-size="12.5" text-anchor="middle">Solicitar Cita Médica</text>
+
+          <ellipse cx="365" cy="280" rx="120" ry="23" fill="#133328" stroke="#6ee7b7" stroke-width="1.5"/>
+          <text x="365" y="285" fill="#f3f4f6" font-size="12.5" text-anchor="middle">Enviar Mensaje / WhatsApp</text>
+
+          <ellipse cx="560" cy="216" rx="125" ry="23" fill="#133328" stroke="#6ee7b7" stroke-width="1.5"/>
+          <text x="560" y="221" fill="#f3f4f6" font-size="12.5" text-anchor="middle">Confirmar / Rechazar Citas</text>
+
+          <ellipse cx="560" cy="280" rx="125" ry="23" fill="#133328" stroke="#6ee7b7" stroke-width="1.5"/>
+          <text x="560" y="285" fill="#f3f4f6" font-size="12.5" text-anchor="middle">Administrar Horarios</text>
+
+          <ellipse cx="560" cy="344" rx="125" ry="23" fill="#133328" stroke="#6ee7b7" stroke-width="1.5"/>
+          <text x="560" y="349" fill="#f3f4f6" font-size="12.5" text-anchor="middle">Revisar Bandeja de Mensajes</text>
+
+          <!-- CONEXIONES CLIENTE -->
+          <line x1="120" y1="175" x2="325" y2="90" stroke="#9ca3af" stroke-width="1.5"/>
+          <line x1="120" y1="185" x2="245" y2="152" stroke="#9ca3af" stroke-width="1.5"/>
+          <line x1="120" y1="195" x2="245" y2="216" stroke="#9ca3af" stroke-width="1.5"/>
+          <line x1="120" y1="205" x2="245" y2="280" stroke="#9ca3af" stroke-width="1.5"/>
+
+          <!-- CONEXIONES ADMIN -->
+          <line x1="800" y1="175" x2="595" y2="90" stroke="#9ca3af" stroke-width="1.5"/>
+          <line x1="800" y1="190" x2="685" y2="216" stroke="#9ca3af" stroke-width="1.5"/>
+          <line x1="800" y1="205" x2="685" y2="280" stroke="#9ca3af" stroke-width="1.5"/>
+          <line x1="800" y1="220" x2="685" y2="344" stroke="#9ca3af" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <a href="#top-objetos" class="volver-arriba">↑ Volver a los botones UML</a>
+    </article>
+
+    <!-- 3. DIAGRAMAS DE SECUENCIA (3 FLUJOS DEL PROYECTO) -->
+    <article id="diagramas-secuencia" class="card-contenido bloque-ancla">
+      <h2>⏱️ Diagramas de Secuencia del Proyecto</h2>
+      <p>Los diagramas de secuencia muestran cómo interactúan los objetos a lo largo del tiempo mediante mensajes ordenados. A continuación se presentan <strong>3 flujos principales</strong> de Veterinaria Patitas Felices:</p>
+
+      <!-- SECUENCIA 1 -->
+      <div id="secuencia-registro" class="subcard-secuencia bloque-ancla">
+        <h3>1️⃣ Diagrama de Secuencia: Registro y Verificación de Cliente</h3>
+        <p style="font-size: 0.9rem; color: #cbd5e1;">Muestra cómo un cliente nuevo crea su cuenta, recibe el código de verificación por correo mediante EmailJS y queda guardado en Firestore.</p>
+        <div class="svg-uml-box">
+          <svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg">
+            <!-- LIFELINES -->
+            <rect x="40" y="15" width="130" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="105" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:Cliente</text>
+            <line x1="105" y1="51" x2="105" y2="260" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <rect x="275" y="15" width="150" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="350" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:PortalWeb (script.js)</text>
+            <line x1="350" y1="51" x2="350" y2="260" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <rect x="515" y="15" width="130" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="580" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:EmailJS</text>
+            <line x1="580" y1="51" x2="580" y2="260" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <rect x="720" y="15" width="130" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="785" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:Firestore</text>
+            <line x1="785" y1="51" x2="785" y2="260" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <!-- MENSAJES -->
+            <line x1="105" y1="85" x2="350" y2="85" stroke="#f3f4f6" stroke-width="1.8"/>
+            <polygon points="350,85 340,80 340,90" fill="#f3f4f6"/>
+            <text x="227" y="78" fill="#f3f4f6" font-size="11.5" text-anchor="middle">1: enviarFormularioRegistro()</text>
+
+            <line x1="350" y1="125" x2="580" y2="125" stroke="#6ee7b7" stroke-width="1.8"/>
+            <polygon points="580,125 570,120 570,130" fill="#6ee7b7"/>
+            <text x="465" y="118" fill="#6ee7b7" font-size="11.5" text-anchor="middle">2: enviarCodigo4Digitos(email)</text>
+
+            <line x1="105" y1="168" x2="350" y2="168" stroke="#f3f4f6" stroke-width="1.8"/>
+            <polygon points="350,168 340,163 340,173" fill="#f3f4f6"/>
+            <text x="227" y="161" fill="#f3f4f6" font-size="11.5" text-anchor="middle">3: ingresarCodigoVerificacion()</text>
+
+            <line x1="350" y1="208" x2="785" y2="208" stroke="#6ee7b7" stroke-width="1.8"/>
+            <polygon points="785,208 775,203 775,213" fill="#6ee7b7"/>
+            <text x="567" y="201" fill="#6ee7b7" font-size="11.5" text-anchor="middle">4: addDoc("usuarios", datosCliente)</text>
+
+            <line x1="350" y1="242" x2="105" y2="242" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <polygon points="105,242 115,237 115,247" fill="#9ca3af"/>
+            <text x="227" y="235" fill="#9ca3af" font-size="11.5" text-anchor="middle">5: redirigir("cliente.html")</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- SECUENCIA 2 -->
+      <div id="secuencia-citas" class="subcard-secuencia bloque-ancla">
+        <h3>2️⃣ Diagrama de Secuencia: Solicitud y Aprobación de Citas</h3>
+        <p style="font-size: 0.9rem; color: #cbd5e1;">Detalla cómo el cliente reserva un turno en <code>cliente.js</code> y cómo el dueño lo confirma en <code>admin.js</code> cubriendo automáticamente ese horario.</p>
+        <div class="svg-uml-box">
+          <svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg">
+            <rect x="40" y="15" width="130" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="105" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:Cliente</text>
+            <line x1="105" y1="51" x2="105" y2="260" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <rect x="265" y="15" width="150" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="340" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:PanelCliente</text>
+            <line x1="340" y1="51" x2="340" y2="260" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <rect x="495" y="15" width="145" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="567" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:Firestore (citas)</text>
+            <line x1="567" y1="51" x2="567" y2="260" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <rect x="715" y="15" width="140" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="785" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:PanelAdmin</text>
+            <line x1="785" y1="51" x2="785" y2="260" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <line x1="105" y1="85" x2="340" y2="85" stroke="#f3f4f6" stroke-width="1.8"/>
+            <polygon points="340,85 330,80 330,90" fill="#f3f4f6"/>
+            <text x="222" y="78" fill="#f3f4f6" font-size="11.5" text-anchor="middle">1: seleccionarMascotaFechaHora()</text>
+
+            <line x1="340" y1="125" x2="567" y2="125" stroke="#6ee7b7" stroke-width="1.8"/>
+            <polygon points="567,125 557,120 557,130" fill="#6ee7b7"/>
+            <text x="453" y="118" fill="#6ee7b7" font-size="11.5" text-anchor="middle">2: guardarCita("Pendiente")</text>
+
+            <line x1="567" y1="165" x2="785" y2="165" stroke="#6ee7b7" stroke-width="1.8"/>
+            <polygon points="785,165 775,160 775,170" fill="#6ee7b7"/>
+            <text x="676" y="158" fill="#6ee7b7" font-size="11.5" text-anchor="middle">3: onSnapshot(nuevaCita)</text>
+
+            <line x1="785" y1="205" x2="567" y2="205" stroke="#f3f4f6" stroke-width="1.8"/>
+            <polygon points="567,205 577,200 577,210" fill="#f3f4f6"/>
+            <text x="676" y="198" fill="#f3f4f6" font-size="11.5" text-anchor="middle">4: updateDoc("Confirmada ✅")</text>
+
+            <line x1="567" y1="242" x2="340" y2="242" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <polygon points="340,242 350,237 350,247" fill="#9ca3af"/>
+            <text x="453" y="235" fill="#9ca3af" font-size="11.5" text-anchor="middle">5: bloquearHorarioParaOtros()</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- SECUENCIA 3 -->
+      <div id="secuencia-mensajes" class="subcard-secuencia bloque-ancla">
+        <h3>3️⃣ Diagrama de Secuencia: Mensajería en Tiempo Real</h3>
+        <p style="font-size: 0.9rem; color: #cbd5e1;">Muestra cómo una consulta escrita por el cliente se almacena en la nube y actualiza al instante el contador y la bandeja del dueño.</p>
+        <div class="svg-uml-box">
+          <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg">
+            <rect x="45" y="15" width="130" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="110" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:Cliente</text>
+            <line x1="110" y1="51" x2="110" y2="230" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <rect x="275" y="15" width="150" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="350" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:FormularioMensaje</text>
+            <line x1="350" y1="51" x2="350" y2="230" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <rect x="505" y="15" width="155" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="582" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:Firestore (mensajes)</text>
+            <line x1="582" y1="51" x2="582" y2="230" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <rect x="720" y="15" width="135" height="36" rx="8" fill="#133328" stroke="#10b981"/>
+            <text x="787" y="38" fill="#6ee7b7" font-size="13" font-weight="bold" text-anchor="middle">:BandejaAdmin</text>
+            <line x1="787" y1="51" x2="787" y2="230" stroke="#6ee7b7" stroke-dasharray="5,5"/>
+
+            <line x1="110" y1="88" x2="350" y2="88" stroke="#f3f4f6" stroke-width="1.8"/>
+            <polygon points="350,88 340,83 340,93" fill="#f3f4f6"/>
+            <text x="230" y="81" fill="#f3f4f6" font-size="11.5" text-anchor="middle">1: redactarAsuntoYMensaje()</text>
+
+            <line x1="350" y1="132" x2="582" y2="132" stroke="#6ee7b7" stroke-width="1.8"/>
+            <polygon points="582,132 572,127 572,137" fill="#6ee7b7"/>
+            <text x="466" y="125" fill="#6ee7b7" font-size="11.5" text-anchor="middle">2: addDoc("mensajes", payload)</text>
+
+            <line x1="582" y1="176" x2="787" y2="176" stroke="#6ee7b7" stroke-width="1.8"/>
+            <polygon points="787,176 777,171 777,181" fill="#6ee7b7"/>
+            <text x="684" y="169" fill="#6ee7b7" font-size="11.5" text-anchor="middle">3: onSnapshot(renderizarMensaje)</text>
+
+            <line x1="350" y1="212" x2="110" y2="212" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4,4"/>
+            <polygon points="110,212 120,207 120,217" fill="#9ca3af"/>
+            <text x="230" y="205" fill="#9ca3af" font-size="11.5" text-anchor="middle">4: confirmarEnvioAlUsuario()</text>
+          </svg>
+        </div>
+      </div>
+
+      <a href="#top-objetos" class="volver-arriba">↑ Volver a los botones UML</a>
+    </article>
   </main>
 
-  <script src="app.js"></script>
+  <a href="https://wa.me/59171234567?text=Hola%20Veterinaria%20Patitas%20Felices%20%F0%9F%90%BE%2C%20quisiera%20hacer%20una%20consulta."
+     class="btn-whatsapp-flotante" target="_blank" rel="noopener noreferrer">
+    <span>💬</span> Contáctanos al WhatsApp
+  </a>
+
+  <script type="module" src="secciones.js"></script>
 </body>
 </html>

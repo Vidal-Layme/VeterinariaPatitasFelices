@@ -3,102 +3,333 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Análisis Estructurado - Veterinaria San Roque 🐾</title>
+  <title>Análisis Estructurado — Veterinaria Patitas Felices 🐾</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cliente.css">
+  <link rel="stylesheet" href="secciones.css">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .intro-estructurado {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.14), rgba(15, 31, 25, 0.92));
+      border: 1px solid rgba(110, 231, 183, 0.28);
+      border-radius: 18px;
+      padding: 2rem;
+    }
+
+    .intro-estructurado h1 {
+      color: #6ee7b7;
+      font-size: 1.9rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .intro-estructurado p {
+      color: #e5e7eb;
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+
+    .panel-botones-mapa {
+      background: #0f1f19;
+      border: 1px solid rgba(110, 231, 183, 0.22);
+      border-radius: 18px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .panel-botones-mapa h2 {
+      color: #6ee7b7;
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    .grupo-botones-nivel {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .etiqueta-grupo {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #9ca3af;
+    }
+
+    .fila-botones-llamativos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    /* Botón visual llamativo con tooltip hover de 2 líneas */
+    .btn-concepto-hover {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 0.8rem 1.2rem;
+      border-radius: 14px;
+      color: #f9fafb;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(5, 150, 105, 0.12));
+      border: 1px solid rgba(110, 231, 183, 0.4);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+    }
+
+    .btn-concepto-hover.principal {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #062016;
+      border-color: #6ee7b7;
+      box-shadow: 0 8px 22px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-concepto-hover.subtema {
+      background: rgba(255, 255, 255, 0.04);
+      color: #d1fae5;
+      border-color: rgba(110, 231, 183, 0.25);
+    }
+
+    .btn-concepto-hover:hover {
+      transform: translateY(-3px) scale(1.02);
+      border-color: #6ee7b7;
+      box-shadow: 0 12px 26px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-concepto-hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(5px);
+      width: max-content;
+      max-width: 340px;
+      background: #06100c;
+      color: #f3f4f6;
+      border: 1px solid #10b981;
+      border-radius: 12px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 400;
+      line-height: 1.35;
+      text-align: left;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.65);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 60;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .btn-concepto-hover:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .bloque-ancla {
+      scroll-margin-top: 90px;
+    }
+
+    .volver-arriba {
+      display: inline-block;
+      margin-top: 0.8rem;
+      color: #6ee7b7;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .volver-arriba:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="logo">🐾 <a href="index.html">Veterinaria San Roque</a></div>
-    <nav class="nav-menu">
-      <a href="index.html" class="nav-link">Inicio</a>
-      <a href="marco-teorico.html" class="nav-link">Marco Teórico</a>
-      <div class="dropdown-item">
-        <button type="button" class="nav-link dropdown-toggle activo" onclick="toggleDropdown('menu-estructurado')">
-          Análisis Estructurado ▾
-          <span class="tooltip">Modelado clásico por procesos: DFD, DER y Diccionario. 📊</span>
-        </button>
-        <div id="menu-estructurado" class="dropdown-menu">
-          <a href="#dfd">Diagrama de Flujo de Datos</a>
-          <a href="#der">Modelo Entidad-Relación</a>
-          <a href="#diccionario">Diccionario de Datos</a>
-        </div>
+  <header class="topbar">
+    <div class="logo" style="cursor: pointer;" onclick="window.location.href='cliente.html'">
+      <span class="logo-icon">🐾</span>
+      <span class="logo-text">Patitas Felices</span>
+    </div>
+
+    <div class="topbar-action">
+      <span id="saludo-usuario-nav" class="cliente-badge-nombre">Hola 🐾</span>
+      <button id="btn-salir-nav" class="btn-outline" onclick="cerrarSesionGlobal()">Salir</button>
+
+      <div class="menu-hamburguesa-wrapper" id="menu-hamburguesa-wrapper">
+        <button type="button" id="btn-menu-hamburguesa" class="btn-hamburguesa" aria-label="Abrir menú" aria-expanded="false">☰</button>
+        <nav id="dropdown-cliente" class="dropdown-menu-cliente">
+          <a id="link-inicio-menu" href="cliente.html" class="dropdown-item-cliente">Inicio</a>
+          <a href="marco-teorico.html" class="dropdown-item-cliente">Marco Teórico</a>
+          <a href="estructurado.html" class="dropdown-item-cliente">Análisis Estructurado</a>
+          <a href="objetos.html" class="dropdown-item-cliente">Orientado a Objetos</a>
+          <a href="video.html" class="dropdown-item-cliente">Video</a>
+          <a href="contactos.html" class="dropdown-item-cliente">Contáctanos</a>
+        </nav>
       </div>
-      <div class="dropdown-item">
-        <button type="button" class="nav-link dropdown-toggle" onclick="toggleDropdown('menu-oo')">
-          Orientado a Objetos ▾
-          <span class="tooltip">Paradigma UML: Casos de uso, clases y secuencias. 🧩</span>
-        </button>
-        <div id="menu-oo" class="dropdown-menu">
-          <a href="objetos.html#casos-uso">Casos de Uso</a>
-          <a href="objetos.html#clases">Diagrama de Clases</a>
-          <a href="objetos.html#secuencia">Diagrama de Secuencia</a>
-        </div>
-      </div>
-      <div class="nav-item-tooltip">
-        <a href="video.html" class="nav-link">
-          Video 🎥
-          <span class="tooltip">Demostración audiovisual del sistema. 🍿</span>
-        </a>
-      </div>
-      <a href="contactos.html" class="nav-link">Contactos</a>
-    </nav>
-    <div class="auth-box">
-      <a href="index.html" class="btn-primary" style="text-decoration:none;">Acceso al Sistema</a>
     </div>
   </header>
 
-  <main class="contenedor">
-    <section class="card" id="dfd">
-      <h2>Diagrama de Flujo de Datos (DFD) 📊</h2>
-      <p style="margin-top:0.5rem;">Representación de los niveles de flujo de información para el módulo de agendamiento de turnos:</p>
-      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
-        <p><strong>[Diagrama DFD Nivel 0 y Nivel 1]</strong></p>
-        <small>Procesos: 1.0 Autenticar Usuario | 2.0 Consultar Disponibilidad | 3.0 Registrar Cita</small>
+  <main class="seccion-container" id="top-estructurado">
+    <!-- QUÉ ES EL ANÁLISIS ESTRUCTURADO -->
+    <section class="intro-estructurado">
+      <h1>🧩 Análisis Estructurado</h1>
+      <p>
+        El <strong>análisis estructurado</strong> es una metodología de ingeniería de software enfocada en definir con claridad <strong>qué debe hacer el sistema</strong>, los datos que maneja y cómo fluye la información entre procesos antes de pasar al diseño técnico o programación. Su paradigma se clasifica mediante el <strong>Modelo Esencial</strong>.
+      </p>
+    </section>
+
+    <!-- BOTONES LLAMATIVOS CON HOVER DE 2 LÍNEAS Y SALTO DIRECTO -->
+    <section class="panel-botones-mapa">
+      <h2>⚡ Mapa Interactivo (Pasa el cursor o haz clic)</h2>
+
+      <div class="grupo-botones-nivel">
+        <span class="etiqueta-grupo">Clasificación Principal</span>
+        <div class="fila-botones-llamativos">
+          <a href="#modelo-esencial"
+             class="btn-concepto-hover principal"
+             data-tooltip="Define los requisitos fundamentales del negocio sin depender de tecnología. Se divide en modelo ambiental y modelo de comportamiento.">
+            🧭 Modelo Esencial
+          </a>
+        </div>
+      </div>
+
+      <div class="grupo-botones-nivel">
+        <span class="etiqueta-grupo">Modelos del Modelo Esencial</span>
+        <div class="fila-botones-llamativos">
+          <a href="#modelo-ambiental"
+             class="btn-concepto-hover"
+             data-tooltip="Delimita la frontera entre el sistema y su entorno externo. Identifica qué entra y sale frente a usuarios y agentes.">
+            🌍 Modelo Ambiental
+          </a>
+          <a href="#modelo-comportamiento"
+             class="btn-concepto-hover"
+             data-tooltip="Describe cómo se procesan, transforman y almacenan los datos internamente. Detalla la lógica del sistema paso a paso.">
+            ⚙️ Modelo de Comportamiento
+          </a>
+        </div>
+      </div>
+
+      <div class="grupo-botones-nivel">
+        <span class="etiqueta-grupo">Elementos del Modelo Ambiental</span>
+        <div class="fila-botones-llamativos">
+          <a href="#declaracion-propositos"
+             class="btn-concepto-hover subtema"
+             data-tooltip="Resume en pocas líneas el objetivo central y alcance del sistema. Sirve como guía clara de lo que debe resolver.">
+            🎯 Declaración de Propósitos
+          </a>
+          <a href="#diagrama-contexto"
+             class="btn-concepto-hover subtema"
+             data-tooltip="Muestra el sistema como un solo proceso conectado a entidades externas. Resume las entradas y salidas principales de información.">
+            🗺️ Diagrama de Contexto
+          </a>
+          <a href="#lista-acontecimientos"
+             class="btn-concepto-hover subtema"
+             data-tooltip="Enumera los eventos o estímulos externos a los que responde el sistema. Cada acontecimiento activa un proceso o respuesta.">
+            📌 Lista de Acontecimientos
+          </a>
+        </div>
+      </div>
+
+      <div class="grupo-botones-nivel">
+        <span class="etiqueta-grupo">Elementos del Modelo de Comportamiento</span>
+        <div class="fila-botones-llamativos">
+          <a href="#dfd-niveles"
+             class="btn-concepto-hover subtema"
+             data-tooltip="Descompone el sistema en procesos por niveles, de lo general a lo detalle. Muestra el flujo de datos entre procesos y almacenes.">
+            🔀 Diagrama de Flujo de Datos por Niveles
+          </a>
+          <a href="#diagrama-er"
+             class="btn-concepto-hover subtema"
+             data-tooltip="Representa las entidades principales, sus atributos y relaciones entre sí. Sirve de base para estructurar ordenadamente los datos.">
+            🗄️ Diagrama de Entidad y Relación
+          </a>
+        </div>
       </div>
     </section>
 
-    <section class="card" id="der" style="margin-top:2rem;">
-      <h2>Modelo Entidad-Relación (DER) 🗄️</h2>
-      <p style="margin-top:0.5rem;">Estructura relacional de almacenamiento en base de datos:</p>
-      <div style="background:#f1f5f9; padding:2rem; text-align:center; border-radius:6px; margin-top:1rem; border:2px dashed #cbd5e1;">
-        <p><strong>[Esquema de Tablas Relacionales]</strong></p>
-        <small>Entidades principales: USUARIOS (1:N) MASCOTAS (1:N) CITAS (N:1) VETERINARIO</small>
-      </div>
-    </section>
+    <!-- SECCIÓN: MODELO ESENCIAL -->
+    <article id="modelo-esencial" class="card-contenido bloque-ancla">
+      <h2>🧭 Modelo Esencial</h2>
+      <p>Representa los requisitos fundamentales del sistema y las reglas del negocio sin atarse todavía a plataformas, lenguajes o hardware. Está constituido por el <strong>Modelo Ambiental</strong> y el <strong>Modelo de Comportamiento</strong>.</p>
+      <a href="#top-estructurado" class="volver-arriba">↑ Volver a los botones</a>
+    </article>
 
-    <section class="card" id="diccionario" style="margin-top:2rem;">
-      <h2>Diccionario de Datos 📖</h2>
-      <p style="margin-top:0.5rem;">Definición de campos y tipos de datos del sistema:</p>
-      <table style="width:100%; border-collapse:collapse; margin-top:1rem; font-size:0.9rem;">
-        <thead>
-          <tr style="background:#e0f2fe; text-align:left;">
-            <th style="padding:0.6rem; border:1px solid #cbd5e1;">Campo</th>
-            <th style="padding:0.6rem; border:1px solid #cbd5e1;">Tipo de Dato</th>
-            <th style="padding:0.6rem; border:1px solid #cbd5e1;">Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="padding:0.5rem; border:1px solid #cbd5e1;">id_usuario</td>
-            <td style="padding:0.5rem; border:1px solid #cbd5e1;">INT / VARCHAR</td>
-            <td style="padding:0.5rem; border:1px solid #cbd5e1;">Identificador único del usuario (PK)</td>
-          </tr>
-          <tr>
-            <td style="padding:0.5rem; border:1px solid #cbd5e1;">rol</td>
-            <td style="padding:0.5rem; border:1px solid #cbd5e1;">VARCHAR(10)</td>
-            <td style="padding:0.5rem; border:1px solid #cbd5e1;">Rol del sistema ('admin' o 'cliente')</td>
-          </tr>
-          <tr>
-            <td style="padding:0.5rem; border:1px solid #cbd5e1;">fecha_cita</td>
-            <td style="padding:0.5rem; border:1px solid #cbd5e1;">DATE</td>
-            <td style="padding:0.5rem; border:1px solid #cbd5e1;">Fecha asignada para la atención médica</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <!-- SECCIÓN: MODELO AMBIENTAL -->
+    <article id="modelo-ambiental" class="card-contenido bloque-ancla">
+      <h2>🌍 Modelo Ambiental</h2>
+      <p>Define la frontera exacta entre el sistema de Veterinaria Patitas Felices y su entorno externo (clientes, administrador, mascotas y servicios externos), precisando qué estímulos recibe y qué respuestas emite.</p>
+
+      <div id="declaracion-propositos" class="bloque-ancla" style="margin-top: 1.2rem;">
+        <h3>🎯 Declaración de Propósitos</h3>
+        <p>Resume en una descripción concisa qué hace el sistema y para qué existe: permitir el registro de mascotas, la solicitud y control de citas veterinarias, la gestión de horarios y la comunicación directa con la clínica.</p>
+      </div>
+
+      <div id="diagrama-contexto" class="bloque-ancla" style="margin-top: 1.2rem;">
+        <h3>🗺️ Diagrama de Contexto</h3>
+        <p>Representa todo el sistema como un único proceso central interactuando con actores externos como el <strong>Cliente</strong> (registra mascotas, pide citas, envía mensajes) y el <strong>Administrador</strong> (gestiona horarios, aprueba citas, lee mensajes).</p>
+        <div class="marco-diagrama">
+        <img src="diagrama-contexto.png" alt="Diagrama de Contexto - Veterinaria Patitas Felices">
+        </div>
+      </div>
+
+      <div id="lista-acontecimientos" class="bloque-ancla" style="margin-top: 1.2rem;">
+        <h3>📌 Lista de Acontecimientos</h3>
+        <ul>
+          <li>El cliente solicita registrarse o iniciar sesión en el sistema.</li>
+          <li>El cliente inscribe o elimina una mascota en su perfil.</li>
+          <li>El cliente solicita una cita eligiendo fecha, hora y servicio.</li>
+          <li>El cliente envía un mensaje o consulta a la veterinaria.</li>
+          <li>El administrador agrega/elimina horarios o confirma/rechaza citas.</li>
+        </ul>
+      </div>
+
+      <a href="#top-estructurado" class="volver-arriba">↑ Volver a los botones</a>
+    </article>
+
+    <!-- SECCIÓN: MODELO DE COMPORTAMIENTO -->
+    <article id="modelo-comportamiento" class="card-contenido bloque-ancla">
+      <h2>⚙️ Modelo de Comportamiento</h2>
+      <p>Detalla cómo se procesan, validan y almacenan los datos dentro del sistema para responder a los acontecimientos del entorno.</p>
+
+      <div id="dfd-niveles" class="bloque-ancla" style="margin-top: 1.2rem;">
+        <h3>🔀 Diagrama de Flujo de Datos por Niveles</h3>
+        <p>Organiza los procesos internos de forma jerárquica (Nivel 0, Nivel 1, etc.), mostrando cómo viajan los datos entre procesos (autenticación, gestión de mascotas, agenda de citas, mensajería) y almacenes de datos (<code>usuarios</code>, <code>mascotas</code>, <code>citas</code>, <code>mensajes</code>, <code>config</code>).</p>
+        <div class="marco-diagrama">
+          <p style="color: #9ca3af; font-size: 0.9rem;">Espacio para tu Diagrama de Flujo de Datos por Niveles</p>
+          <!-- <img src="dfd-niveles.png" alt="Diagrama de Flujo de Datos por Niveles"> -->
+        </div>
+      </div>
+
+      <div id="diagrama-er" class="bloque-ancla" style="margin-top: 1.2rem;">
+        <h3>🗄️ Diagrama de Entidad y Relación</h3>
+        <p>Modela las entidades clave y sus vínculos: un <strong>Usuario (Cliente)</strong> registra una o más <strong>Mascotas</strong>, solicita <strong>Citas</strong> sobre un horario y envía <strong>Mensajes</strong>, mientras el <strong>Administrador</strong> administra los <strong>Horarios</strong> y estados de las citas.</p>
+        <div class="marco-diagrama">
+          <p style="color: #9ca3af; font-size: 0.9rem;">Espacio para tu Diagrama de Entidad y Relación (ER)</p>
+          <!-- <img src="diagrama-er.png" alt="Diagrama de Entidad y Relación"> -->
+        </div>
+      </div>
+
+      <a href="#top-estructurado" class="volver-arriba">↑ Volver a los botones</a>
+    </article>
   </main>
 
-  <script src="app.js"></script>
+  <a href="https://wa.me/59171234567?text=Hola%20Veterinaria%20Patitas%20Felices%20%F0%9F%90%BE%2C%20quisiera%20hacer%20una%20consulta."
+     class="btn-whatsapp-flotante" target="_blank" rel="noopener noreferrer">
+    <span>💬</span> Contáctanos al WhatsApp
+  </a>
+
+  <script type="module" src="secciones.js"></script>
 </body>
 </html>

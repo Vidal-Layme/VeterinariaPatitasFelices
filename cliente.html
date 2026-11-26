@@ -9,18 +9,32 @@
 </head>
 <body>
 
-  <!-- Barra superior del cliente -->
-  <header class="topbar">
-    <div class="logo" style="cursor: pointer;" onclick="window.location.href='index.html'">
-      <span class="logo-icon">🐾</span>
-      <span class="logo-text">Veterinaria Patitas Felices</span>
-    </div>
-    <div class="topbar-action">
-      <span id="saludo-cliente" class="saludo-usuario"></span>
-      <button class="btn-outline" onclick="window.location.href='index.html'" style="margin-right: 8px;">Inicio</button>
-      <button class="btn-outline" onclick="cerrarSesionCliente()">Salir</button>
-    </div>
-  </header>
+    <header class="topbar">
+      <div class="logo" style="cursor: pointer;" onclick="window.location.href='cliente.html'">
+        <span class="logo-icon">🐾</span>
+        <span class="logo-text">Patitas Felices</span>
+      </div>
+
+      <div class="topbar-action">
+        <span id="saludo-cliente" class="cliente-badge-nombre">Hola 🐶</span>
+        <button class="btn-outline" onclick="cerrarSesionCliente()">Salir</button>
+
+        <div class="menu-hamburguesa-wrapper" id="menu-hamburguesa-wrapper">
+          <button type="button" id="btn-menu-hamburguesa" class="btn-hamburguesa" aria-label="Abrir menú" aria-expanded="false">
+            ☰
+          </button>
+
+          <nav id="dropdown-cliente" class="dropdown-menu-cliente">
+            <a href="cliente.html" class="dropdown-item-cliente">Inicio</a>
+            <a href="marco-teorico.html" class="dropdown-item-cliente">Marco Teórico</a>
+            <a href="estructurado.html" class="dropdown-item-cliente">Análisis Estructurado</a>
+            <a href="objetos.html" class="dropdown-item-cliente">Orientado a Objetos</a>
+            <a href="video.html" class="dropdown-item-cliente">Video</a>
+            <a href="contactos.html" class="dropdown-item-cliente">Contáctanos</a>
+          </nav>
+        </div>
+      </div>
+    </header>
 
   <main class="portal-container">
     
